@@ -26,3 +26,12 @@
 @import url(../blocks/edit-form/__form-title/edit-form__form-title.css);
 
 @import url(../blocks/elements/elements.css);
+@import url(../blocks/elements/__grid/elements__grid.css);
+@import url(../blocks/elements/__element/elements__element.css);
+@import url(../blocks/elements/__image/elements__image.css);
+@import url(../blocks/elements/__group/elements__group.css);
+@import url(../blocks/elements/__name/elements__name.css);
+@import url(../blocks/elements/__like/elements__like.css);
+
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__copyright/footer__copyright.css);

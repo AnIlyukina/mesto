@@ -1,0 +1,13 @@
+.profile__add-button{
+  width: 150px;
+  height: 50px;
+  background-color: transparent;
+  border: 2px solid #FFFFFF;
+  background-image: url(../../../images/image__edd-button.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 22px 22px;
+  cursor: pointer;
+  align-self:center;
+  margin-left: 244px;
+}

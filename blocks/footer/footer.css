@@ -1,0 +1,8 @@
+.footer{
+  width: 100%;
+  display: flex;
+  margin: 66px auto 0;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  color: #545454;
+}
