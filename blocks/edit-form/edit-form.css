@@ -1,0 +1,16 @@
+.edit-form{
+  display: none;
+  width: 470px;
+  height: 370px;
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+.edit-form.visible {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}

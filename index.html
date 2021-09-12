@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+<body>
+  <div class="page">
+    <div class = "page__overlay"></div>
+    <div class = "edit-form">
+      <button class="edit-form__close"></button>
+      <form class="edit-form__form">
+        <div class="edit-form__form-title">Редактировать профиль</div>
+        <input type="text" class="edit-form__form-input edit-form__form-input_name">
+        <input type="text" class="edit-form__form-input edit-form__form-input_vocation">
+        <button type="submit" class="edit-form__form-save">Сохранить</button>
+      </form>
+    </div>
+    <div class="page__content">
+      <header class="header">
+        <img class="header__logo" src="/images/logo.svg">
+      </header>
+      <main class="content">
+        <section class="profile">
+          <div class="profile__items">
+            <div class="profile__avatar">
+            </div>
+            <div class="profile__info">
+              <div class="profile__info-main">
+                <div class="profile__info-name">Жак-Ив Кусто</div>
+                <button class="profile__edit-button"></button>
+              </div>
+              <div class="profile__info-vocation">Исследователь океан</div>
+            </div>
+            <button class="profile__add-button"> </button>
+          </div>
+        </section>
+        <section class="elements">
+
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+<script src="/index.js"></script>
+</html>

@@ -1,0 +1,8 @@
+.edit-form__close {
+  background-image: url(../../../images/edit-form__close.png);
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
