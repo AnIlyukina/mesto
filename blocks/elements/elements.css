@@ -1,4 +1,11 @@
 .elements{
   width: 100%;
   margin-top: 51px;
+  box-sizing: border-box;
+}
+
+@media(max-width: 900px){
+  .elements{
+    padding: 0 19px;
+  }
 }

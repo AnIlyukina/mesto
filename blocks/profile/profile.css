@@ -4,3 +4,9 @@
   width: 100%;
   margin-top: 40px;
 }
+
+@media(max-width: 320px){
+  .profile{
+    margin-top: 42px;
+  }
+}

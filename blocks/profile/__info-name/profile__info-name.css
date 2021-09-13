@@ -7,3 +7,19 @@
   margin-right: 18px;
   max-height: 39px;
 }
+
+@media(max-width: 900px){
+  .profile__info-name{
+    font-size: 27px;
+    line-height: 33px;
+  }
+}
+
+@media(max-width: 425px){
+  .profile__info-name{
+    margin-right: 10px;
+    max-height: 26px;
+  }
+}
+
+

@@ -6,3 +6,22 @@
   line-height: 22px;
   margin-top: 16px;
 }
+
+@media(max-width: 900px){
+  .profile__info-vocation{
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
+
+@media(max-width: 600px){
+  .profile__info-vocation{
+    margin-top: 14px;
+  }
+}
+
+@media(max-width: 425px){
+  .profile__info-vocation{
+    text-align: center;
+  }
+}
