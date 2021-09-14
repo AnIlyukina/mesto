@@ -7,6 +7,6 @@
 }
 
 .edit-form__form-input:focus{
-  outline-color: transparent; 
+  outline-color: transparent;
   color: #000000;
 }
