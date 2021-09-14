@@ -9,4 +9,10 @@
   cursor: pointer;
   align-self:flex-end;
   box-sizing: border-box;
+  transition: .3s;
+}
+
+.elements__like:hover{
+  opacity: .5;
+  cursor: url(../../../images/cursor.svg),pointer;
 }

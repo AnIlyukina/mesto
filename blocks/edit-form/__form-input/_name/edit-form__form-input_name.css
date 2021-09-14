@@ -1,3 +1,10 @@
 .edit-form__form-input_name{
   margin: 54px 0 10px 0;
 }
+
+
+@media (max-width:700px){
+  .edit-form__form-input_name{
+    margin: 75px 0 10px 0;
+  }
+}
