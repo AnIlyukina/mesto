@@ -1,10 +1,9 @@
 .edit-form__form-input{
-  min-width: 358px;
+  width: 100%;
   max-height: 17px;
   background-color: transparent;
   border: none;
   font-family: inherit; 
-  padding: 0;
 }
 
 .edit-form__form-input:focus{
