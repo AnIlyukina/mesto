@@ -20,5 +20,5 @@
 
 .profile__edit-button:hover{
   opacity: .6;
-  cursor: url(../../../images/cursor.svg),pointer;
+  cursor: pointer;
 }

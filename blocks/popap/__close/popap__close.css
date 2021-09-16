@@ -1,4 +1,4 @@
-.edit-form__close {
+.popap__close {
   background-image: url(../../../images/Close\ Icon.svg);
   width: 32px;
   height: 32px;
@@ -13,13 +13,13 @@
 }
 
 @media (max-width:700px){
-  .edit-form__close{
+  .popap__close{
     width: 20px;
     height: 20px;
   }
 }
 
-.edit-form__close:hover{
+.popap__close:hover{
   opacity: .6;
-  cursor: url(../../../images/cursor.svg),pointer;
+  cursor: pointer;
 }

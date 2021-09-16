@@ -3,7 +3,7 @@
   min-height: 50px;
   background-color: transparent;
   border: 2px solid #FFFFFF;
-  background-image: url(../../../images/image__edd-button.png);
+  background-image: url(../../../images/image__add-button.svg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: 22px 22px;
@@ -11,6 +11,7 @@
   align-self:center;
   margin-left: auto;
   transition: .3s;
+  border-radius: 2px;
 }
 
 
@@ -32,5 +33,5 @@
 
 .profile__add-button:hover{
   opacity: .6;
-  cursor: url(../../../images/cursor.svg),pointer;
+  cursor: pointer;
 }

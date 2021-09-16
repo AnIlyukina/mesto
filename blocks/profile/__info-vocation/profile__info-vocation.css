@@ -5,12 +5,17 @@
   font-size: 18px;
   line-height: 22px;
   margin-top: 16px;
+  text-overflow: ellipsis;
+  max-width: 340px;
+  overflow: hidden;
+  white-space: nowrap; 
 }
 
 @media(max-width: 900px){
   .profile__info-vocation{
     font-size: 14px;
     line-height: 17px;
+    max-width: 200px;
   }
 }
 

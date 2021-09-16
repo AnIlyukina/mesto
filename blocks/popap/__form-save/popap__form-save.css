@@ -1,4 +1,4 @@
-.edit-form__form-save{
+.popap__form-save{
   width: 100%;
   min-height: 50px;
   background-color: black;
@@ -13,16 +13,19 @@
   border-radius: 2px;
   margin-top: 48px;
   transition: .3s;
-  
+  margin-bottom: 34px;
 }
 
-.edit-form__form-save:hover{
+.popap__form-save:hover{
   opacity: .8;
-  cursor: url(../../../images/cursor.svg),pointer;
+  cursor: pointer;
 }
 
 @media (max-width:700px){
-  .edit-form__form-save{
+  .popap__form-save{
     margin-top: 45px;
+    font-size: 14px;
+    line-height: 17px;
+    margin-bottom: 20px;
   }
 }

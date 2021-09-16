@@ -7,5 +7,6 @@
 @media(max-width: 900px){
   .elements{
     padding: 0 19px;
+    margin-top: 36px;
   }
 }

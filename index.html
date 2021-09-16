@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,22 +7,8 @@
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
 </head>
-<body>
+<body class="body">
   <div class="page">
-    <div class = "page__overlay"></div>
-    <div class = "edit-form">
-      <button class="edit-form__close"></button>
-      <form class="edit-form__form">
-        <div class="edit-form__form-title">Редактировать профиль</div>
-        <div class="edit-form__input-box"> 
-          <input type="text" class="edit-form__form-input edit-form__form-input_name">
-        </div>
-        <div class="edit-form__input-box"> 
-          <input type="text" class="edit-form__form-input edit-form__form-input_vocation">
-        </div>
-        <button type="submit" class="edit-form__form-save">Сохранить</button>
-      </form>
-    </div>
     <div class="page__content">
       <header class="header">
         <img class="header__logo" src="./images/header__logo.svg" alt="Логотип">
@@ -35,11 +21,11 @@
             <div class="profile__info">
               <div class="profile__info-main">
                 <h1 class="profile__info-name">Жак-Ив Кусто</h1>
-                <button class="profile__edit-button"></button>
+                <button type="button" class="profile__edit-button"></button>
               </div>
               <div class="profile__info-vocation">Исследователь океана</div>
             </div>
-            <button class="profile__add-button"> </button>
+            <button type="button" class="profile__add-button"> </button>
           </div>
         </section>
         <section class="elements">
@@ -47,43 +33,43 @@
             <li class="elements__element">
               <img class="elements__image" src="images/element__karachaevo.jpg" alt="Карачаевск">
               <div class="elements__group">
-                <p class="elements__name">Карачаевск</p>
-                <button class="elements__like elements__like_active"></button>
+                <h3 class="elements__name">Карачаевск</h3>
+                <button type="button" class="elements__like"></button>
               </div>
             </li>
             <li class="elements__element">
               <img class="elements__image" src="images/element__elbrus.jpg" alt="Гора Эльбрус">
               <div class="elements__group">
-                <p class="elements__name">Гора Эльбрус</p>
-                <button class="elements__like elements__like_active"></button>
+                <h3 class="elements__name">Гора Эльбрус</h3>
+                <button type="button" class="elements__like"></button>
               </div>
             </li>
             <li class="elements__element">
               <img class="elements__image" src="images/element__dombai.jpg" alt="Домбай">
               <div class="elements__group">
-                <p class="elements__name">Домбай</p>
-                <button class="elements__like elements__like_active"></button>
+                <h3 class="elements__name">Домбай</h3>
+                <button type="button"  class="elements__like"></button>
               </div>
             </li>
             <li class="elements__element">
               <img class="elements__image" src="images/element__elbrus.jpg" alt="Гора Эльбрус">
               <div class="elements__group">
-                <p class="elements__name">Гора Эльбрус</p>
-                <button class="elements__like elements__like_active"></button>
+                <h3 class="elements__name">Гора Эльбрус</h3>
+                <button type="button" class="elements__like"></button>
               </div>
             </li>
             <li class="elements__element">
               <img class="elements__image" src="images/element__dombai.jpg" alt="Домбай">
               <div class="elements__group">
-                <p class="elements__name">Домбай</p>
-                <button class="elements__like elements__like_active"></button>
+                <h3 class="elements__name">Домбай</h3>
+                <button type="button" class="elements__like"></button>
               </div>
             </li>
             <li class="elements__element">
               <img class="elements__image" src="images/element__karachaevo.jpg" alt="Карачаево-Ч...">
               <div class="elements__group">
-                <p class="elements__name">Карачаево-Черкессия</p>
-                <button class="elements__like elements__like_active"></button>
+                <h3 class="elements__name">Карачаево-Черкессия</h3>
+                <button class="elements__like"></button>
               </div>
             </li>
           </ul>
@@ -92,8 +78,19 @@
       <footer class="footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
       </footer>
+      <div class="popap">
+        <div class="popap__container">
+          <button class="popap__close"></button> 
+          <form name="form" class="popap__form">
+            <h2 class="popap__form-title">Редактировать профиль</h2>
+            <input name="full-name"  type="text" class="popap__form-name">
+            <input name="vocation" type="text" class="popap__form-vocation">
+            <button type="submit" class="popap__form-save">Сохранить</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-  <script src="index.js"></script>
+  <script src="scripts/index.js"></script>
 </body>
 </html>
