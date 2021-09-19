@@ -1,11 +1,9 @@
-.popap__form{
+.popup__container{
   display: flex;
   flex-direction: column;
   max-width: 430px;
   width: 100%;
   background-color: white;
-  margin-right: 40px;
-  margin-top: 8px;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
   position: relative;
@@ -14,16 +12,10 @@
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  padding: 0 36px;
-  box-sizing: border-box;
 }
 
 @media (max-width:700px){
-  .popap__form{
+  .popup__container{
     max-width: 282px;
-    width: 100%;
-    margin-right: 0px;
-    margin-top: 16px;
-    padding: 0 22px;
   }
 }

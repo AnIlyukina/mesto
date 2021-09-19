@@ -1,20 +1,13 @@
-.popap__form-name{
+.popup__input{
   width: 100%;
-  padding: 0 0 10px 0;
   background-color: transparent;
+  padding: 0 0 11px 0;
   border: none;
   border-bottom: 1px solid rgb(0, 0, 0, 0.2);
   font-family: inherit;
-  margin-top: 54px;
 }
 
-.popap__form-name:focus{
+.popup__input:focus{
   outline-color: transparent;
   color: #000000;
-}
-
-@media (max-width:700px){
-  .popap__form-name{
-    margin-top: 75px;
-  }
 }

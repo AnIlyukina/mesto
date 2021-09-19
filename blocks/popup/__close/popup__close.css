@@ -1,4 +1,7 @@
-.popap__close {
+.popup__close {
+  position: absolute;
+  top: -40px;
+  left: 438px;
   width: 32px;
   height: 32px;
   background-color: transparent;
@@ -13,13 +16,15 @@
 }
 
 @media (max-width:700px){
-  .popap__close{
+  .popup__close{
     width: 20px;
     height: 20px;
+    top: -36px;
+    left: 262px;
   }
 }
 
-.popap__close:hover{
+.popup__close:hover{
   opacity: .6;
   cursor: pointer;
 }

@@ -1,4 +1,4 @@
-.popap__form-title{
+.popup__form-title{
   font-family: 'Inter', Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 900;
@@ -9,9 +9,9 @@
 }
 
 @media (max-width:700px){
-  .popap__form-title{
-  font-size: 18px;
-  line-height: 22px;
-  margin-top: 25px;
+  .popup__form-title{
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 25px;
   }
 }
