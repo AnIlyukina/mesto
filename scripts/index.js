@@ -26,8 +26,8 @@ const popupImageCloseButton = popupImage.querySelector('.popup__close')
 const elementsGrid = document.querySelector('.elements__grid')
 const cardTemplateElement = document.querySelector('.elements__template')
 
-const popupImageName = document.querySelector('.popup__image-title')
-const popupImageLink = document.querySelector('.popup__image')
+// const popupImageName = document.querySelector('.popup__image-title')
+// const popupImageLink = document.querySelector('.popup__image')
 
 const elementName = document.querySelector('.elements__name')
 
@@ -94,12 +94,12 @@ function onDeleteCLick (event){
   cardDelete.remove();
 }
 
-function openPopupImage (){
+function openPopupImage (e){
   onOpenClick(popupImage)
   // Присвоение ссылки PopupImage 
-  popupImageLink.src = elementsGrid.querySelector('.elements__image').src
+  popupImage.querySelector('.popup__image').src = e.currentTarget.src
   // Присвоение названия картинки PopupImage 
-  popupImageName.textContent = elementsGrid.querySelector('.elements__name').textContent
+  popupImage.querySelector('.popup__image-title').textContent = e.currentTarget.parentElement.querySelector('.elements__name').textContent
 
 } 
 
