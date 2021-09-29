@@ -1,35 +1,31 @@
-const editButton = document.querySelector('.profile__edit-button') // переменная кнопки редактирования
-const popupEdit = document.querySelector('.popup_type_edit') // переменная popupEdit
-const popupEditForm = document.querySelector('.popup__form_type_edit') //переменная формы popupEdit
+// Переменные окна popapEdit
+const popupEdit = document.querySelector('.popup_type_edit')
+const popupEditForm = popupEdit.querySelector('.popup__form_type_edit') 
+const popupEditCloseButton = popupEdit.querySelector('.popup__close') 
+const popupFormName = popupEdit.querySelector ('.popup__input_type_name') 
+const popupFormVocation = popupEdit.querySelector ('.popup__input_type_vocation')
 
-
-const popupEditCloseButton = popupEdit.querySelector('.popup__close') // п закрытия edit формы
-
-
-
-const profileName = document.querySelector('.profile__info-name') // переменная имени на странице
-const profileVocation = document.querySelector('.profile__info-vocation') //переменная вида деятельности на странице
-const popupFormName = document.querySelector ('.popup__input_type_name') // переменная имени в popupEdit форме
-const popupFormVocation = document.querySelector ('.popup__input_type_vocation')// переменная вида деятельности в popupEdit форме
-
+// Переменные окна popapAdd
 const popupAdd = document.querySelector('.popup_type_add')
 const popupAddCloseButton = popupAdd.querySelector('.popup__close') 
+const placeName = popupAdd.querySelector('.popup__input_type_title')
+const placeImageLink = popupAdd.querySelector('.popup__input_type_link')
+const popupAddForm = popupAdd.querySelector('.popup__form_type_add') 
 
-const addButton = document.querySelector('.profile__add-button')
-const placeName = document.querySelector('.popup__input_type_title')
-const placeImageLink = document.querySelector('.popup__input_type_link')
-const popupAddForm = document.querySelector('.popup__form_type_add') 
+//Переменные окна popapImage
 const popupImage = document.querySelector('.popup_type_image')
 const popupImageCloseButton = popupImage.querySelector('.popup__close') 
 
+//Переменныe секции Profile
+const editButton = document.querySelector('.profile__edit-button') 
+const profileName = document.querySelector('.profile__info-name') 
+const profileVocation = document.querySelector('.profile__info-vocation') 
+const addButton = document.querySelector('.profile__add-button')
 
+//Переменныe секции Grid
 const elementsGrid = document.querySelector('.elements__grid')
+
 const cardTemplateElement = document.querySelector('.elements__template')
-
-// const popupImageName = document.querySelector('.popup__image-title')
-// const popupImageLink = document.querySelector('.popup__image')
-
-const elementName = document.querySelector('.elements__name')
 
 const initialCards = [
   {
@@ -58,20 +54,24 @@ const initialCards = [
   }
 ]; 
 
+//Общая функция для открытия popup окон
 const onOpenClick = (modal)=> {
   modal.classList.add('popup_opened')
 }
 
+//Общая функция для закрытия popup окон
 const onCloseClick = (modal) => {
   modal.classList.remove('popup_opened')
 }
 
+//Функция на открытие окна popupEdit
 const onEditClick = () => {
   popupFormName.value = profileName.textContent
   popupFormVocation.value = profileVocation.textContent
   onOpenClick(popupEdit)
 }
 
+//Функция на сохранения данных popupEdit
 const onEditSubmit = (event) => {
   event.preventDefault()
   profileName.textContent = popupFormName.value
@@ -79,21 +79,23 @@ const onEditSubmit = (event) => {
   onCloseClick(popupEdit)
 }
 
+// Функция на открытие окна popupAdd
 const onAddClick = () => {
     onOpenClick(popupAdd)
   }
 
- //Функция срабатывающая на нажатие на лайк
+ //Функция на лайк карточки
 function onLikeClick (event) {
   event.target.classList.toggle('elements__like_active')
 }
 
-//Функция срабатывающая на кнопку удаления карточки 
+//Функция на удаление карточки 
 function onDeleteCLick (event){
   const cardDelete = event.currentTarget.closest('.elements__element')
   cardDelete.remove();
 }
 
+//Функция на открытие окна popupImage
 function openPopupImage (e){
   onOpenClick(popupImage)
   // Присвоение ссылки PopupImage 
@@ -103,7 +105,7 @@ function openPopupImage (e){
 
 } 
 
-//клонирование массива
+//Клонирование массива
 const renderCards = (element) => {
 const newCardElement = cardTemplateElement.content.cloneNode(true)
 
@@ -116,12 +118,13 @@ newCardElement.querySelector('.elements__like').addEventListener('click', onLike
 //УДАЛЕНИЕ
 newCardElement.querySelector('.elements__delete').addEventListener('click', onDeleteCLick)
 
-// добавила слушатель на картинку, чтобы при нажатии открывалась функция на открытие карточки
+// КАРТОЧКА
 newCardElement.querySelector('.elements__image').addEventListener('click', openPopupImage)
 
 elementsGrid.prepend(newCardElement)
 }
 
+// Добавление карточки в массив
 const AddCard = (evt) =>{
     evt.preventDefault()
     const addCardElement = {
@@ -134,14 +137,13 @@ const AddCard = (evt) =>{
 
 initialCards.map(renderCards)
 
-popupAddForm.addEventListener('submit', AddCard)
 
 editButton.addEventListener('click', onEditClick)
 popupEditForm.addEventListener ('submit', onEditSubmit)
 popupEditCloseButton.addEventListener('click', () => onCloseClick(popupEdit))
 
+popupAddForm.addEventListener('submit', AddCard)
 addButton.addEventListener ('click', onAddClick)
-
 popupAddCloseButton.addEventListener('click', () => onCloseClick(popupAdd))
 
 popupImageCloseButton.addEventListener('click', () => onCloseClick(popupImage))

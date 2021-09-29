@@ -27,6 +27,6 @@
 
 @media(max-width: 425px){
   .profile__info-vocation{
-    text-align: center;
+    margin-left: 28px;
   }
 }
