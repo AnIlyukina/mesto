@@ -1,87 +1,147 @@
 const editButton = document.querySelector('.profile__edit-button') // переменная кнопки редактирования
 const popupEdit = document.querySelector('.popup_type_edit') // переменная popupEdit
-const popupForm = document.querySelector('.popup__form') //переменная формы popupEdit
-const popupCloseButtons = document.querySelectorAll('.popup__close') // переменная кнопки закрытия popup
+const popupEditForm = document.querySelector('.popup__form_type_edit') //переменная формы popupEdit
+
+
+const popupEditCloseButton = popupEdit.querySelector('.popup__close') // п закрытия edit формы
+
+
+
 const profileName = document.querySelector('.profile__info-name') // переменная имени на странице
 const profileVocation = document.querySelector('.profile__info-vocation') //переменная вида деятельности на странице
 const popupFormName = document.querySelector ('.popup__input_type_name') // переменная имени в popupEdit форме
 const popupFormVocation = document.querySelector ('.popup__input_type_vocation')// переменная вида деятельности в popupEdit форме
-const elementsGrid = document.querySelector('.elements__grid')// переменная 
+
 const popupAdd = document.querySelector('.popup_type_add')
+const popupAddCloseButton = popupAdd.querySelector('.popup__close') 
+
 const addButton = document.querySelector('.profile__add-button')
+const placeName = document.querySelector('.popup__input_type_title')
+const placeImageLink = document.querySelector('.popup__input_type_link')
+const popupAddForm = document.querySelector('.popup__form_type_add') 
+const popupImage = document.querySelector('.popup_type_image')
+const popupImageCloseButton = popupImage.querySelector('.popup__close') 
+
+
+const elementsGrid = document.querySelector('.elements__grid')
+const cardTemplateElement = document.querySelector('.elements__template')
+
+const popupImageName = document.querySelector('.popup__image-title')
+const popupImageLink = document.querySelector('.popup__image')
+
+const elementName = document.querySelector('.elements__name')
 
 const initialCards = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    name: 'Стамбул',
+    link: 'https://images.unsplash.com/photo-1628936969837-e3afd8427bd8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1064&q=80.jpg',
   },
   {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    name: 'Греция',
+    link: 'https://images.unsplash.com/photo-1618500031461-a5fc01e96763?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80.jpg',
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    name: 'Мальдивы',
+    link: 'https://images.unsplash.com/photo-1527179528411-4219e0714bcc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2864&q=80.jpg',
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Италия',
+    link: 'https://images.unsplash.com/photo-1582204545593-1356b96cab4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1035&q=80.jpg',
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    name: 'Сингапур',
+    link: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1652&q=80.jpg',
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    name: 'Москва',
+    link: 'https://images.unsplash.com/photo-1576413326475-ea6c788332fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2128&q=80.jpg',
   }
 ]; 
 
-const onEditClick = () => {               // объявление функции на нажатие на кнопку редактирования 
-  popupEdit.classList.add('popup_opened') // добавление класса элементу popupEdit
-  popupFormVocation.value = profileVocation.textContent  // при открытие popupEdit запись значения со страницы в форму (вид деятельности)
-  popupFormName.value = profileName.textContent // при открытие popupEdit запись значения со страницы в форму (имя)
+const onOpenClick = (modal)=> {
+  modal.classList.add('popup_opened')
 }
 
-const onCloseClick = () => {                 // объявление функции на нажатие кнопки popupEdit
-  // popup.classList.remove('popup_opened') // удаление класса у элемента popup
-  if (popupEdit.classList.contains('popup_opened')) {
-    popupEdit.classList.remove('popup_opened')
-  }
-  else if (popupAdd.classList.contains('popup_opened')) {
-    popupAdd.classList.remove('popup_opened')
-  }
+const onCloseClick = (modal) => {
+  modal.classList.remove('popup_opened')
 }
 
-const onSubmit = (event) => {
-  event.preventDefault() // отменяна стандартной отправки формы.
-  profileName.textContent = popupFormName.value  // при нажатии на кнопку сохранить перезаписывает содержимое из popupEdit (имя)
-  profileVocation.textContent = popupFormVocation.value// при нажатии на кнопку сохранить перезаписывает содержимое из popupEdit (вид деятельности)
-  onCloseClick(); // добавление класса popupEdit для его закрытия
+const onEditClick = () => {
+  popupFormName.value = profileName.textContent
+  popupFormVocation.value = profileVocation.textContent
+  onOpenClick(popupEdit)
 }
 
-const onLoad = () => {
-  initialCards.forEach((item) => {
-    elementsGrid.innerHTML += `<li class="elements__element">
-                                <img class="elements__image" src="${item.link}" alt="${item.name}">
-                                <div class="elements__group">
-                                  <h3 class="elements__name">${item.name}</h3>
-                                  <button type="button" class="elements__like"></button>
-                                </div>
-                              </li>`
-  })
+const onEditSubmit = (event) => {
+  event.preventDefault()
+  profileName.textContent = popupFormName.value
+  profileVocation.textContent = popupFormVocation.value
+  onCloseClick(popupEdit)
 }
 
 const onAddClick = () => {
-  popupAdd.classList.add('popup_opened')
+    onOpenClick(popupAdd)
+  }
+
+ //Функция срабатывающая на нажатие на лайк
+function onLikeClick (event) {
+  event.target.classList.toggle('elements__like_active')
 }
 
-addButton.addEventListener('click', onAddClick)
-editButton.addEventListener('click', onEditClick) // вызов функции на нажатие кнопки редактирования
-popupCloseButtons.forEach((item) => {
-  item.addEventListener('click', onCloseClick)
-})
-// popupCloseButton.addEventListener('click', onCloseClick) // вызов функции на нажатие кнопки закрытия popupEdit
-popupForm.addEventListener ('submit', onSubmit)
+//Функция срабатывающая на кнопку удаления карточки 
+function onDeleteCLick (event){
+  const cardDelete = event.currentTarget.closest('.elements__element')
+  cardDelete.remove();
+}
 
-window.addEventListener('load', onLoad)
+function openPopupImage (){
+  onOpenClick(popupImage)
+  // Присвоение ссылки PopupImage 
+  popupImageLink.src = elementsGrid.querySelector('.elements__image').src
+  // Присвоение названия картинки PopupImage 
+  popupImageName.textContent = elementsGrid.querySelector('.elements__name').textContent
+
+} 
+
+//клонирование массива
+const renderCards = (element) => {
+const newCardElement = cardTemplateElement.content.cloneNode(true)
+
+newCardElement.querySelector('.elements__name').textContent = element.name
+newCardElement.querySelector('.elements__image').src = element.link
+
+// ЛАЙК
+newCardElement.querySelector('.elements__like').addEventListener('click', onLikeClick)
+
+//УДАЛЕНИЕ
+newCardElement.querySelector('.elements__delete').addEventListener('click', onDeleteCLick)
+
+// добавила слушатель на картинку, чтобы при нажатии открывалась функция на открытие карточки
+newCardElement.querySelector('.elements__image').addEventListener('click', openPopupImage)
+
+elementsGrid.prepend(newCardElement)
+}
+
+const AddCard = (evt) =>{
+    evt.preventDefault()
+    const addCardElement = {
+        name: placeName.value,
+        link: placeImageLink.value
+  }
+    renderCards(addCardElement)
+    onCloseClick(popupAdd) 
+  }
+
+initialCards.map(renderCards)
+
+popupAddForm.addEventListener('submit', AddCard)
+
+editButton.addEventListener('click', onEditClick)
+popupEditForm.addEventListener ('submit', onEditSubmit)
+popupEditCloseButton.addEventListener('click', () => onCloseClick(popupEdit))
+
+addButton.addEventListener ('click', onAddClick)
+
+popupAddCloseButton.addEventListener('click', () => onCloseClick(popupAdd))
+
+popupImageCloseButton.addEventListener('click', () => onCloseClick(popupImage))

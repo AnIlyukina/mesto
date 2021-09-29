@@ -4,6 +4,8 @@
   margin: 0;
   background-color: white;
   overflow: hidden;
+  position: relative;
+
 }
 
 @media(max-width: 454px){
