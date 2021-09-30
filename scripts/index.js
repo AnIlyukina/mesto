@@ -133,14 +133,14 @@ elementsGrid.prepend(newCardElement)
 
 // Добавление карточки в массив
 const addCard = (evt) =>{
-    evt.currentTarget.reset()
-    evt.preventDefault()
+  evt.preventDefault() 
     const addCardElement = {
         name: placeName.value,
         link: placeImageLink.value
-  }
-    renderCards(addCardElement)
+      }
+    renderCards(addCardElement)
     closePopup(popupAdd) 
+    evt.currentTarget.reset()
   }
 
 initialCards.map(renderCards)
