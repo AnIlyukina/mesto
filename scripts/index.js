@@ -55,12 +55,12 @@ const initialCards = [
 ]; 
 
 //Общая функция для открытия popup окон
-const onOpenClick = (modal)=> {
+const openPopup = (modal)=> {
   modal.classList.add('popup_opened')
 }
 
 //Общая функция для закрытия popup окон
-const onCloseClick = (modal) => {
+const closePopup = (modal) => {
   modal.classList.remove('popup_opened')
 }
 
@@ -68,7 +68,7 @@ const onCloseClick = (modal) => {
 const onEditClick = () => {
   popupFormName.value = profileName.textContent
   popupFormVocation.value = profileVocation.textContent
-  onOpenClick(popupEdit)
+  openPopup(popupEdit)
 }
 
 //Функция на сохранения данных popupEdit
@@ -76,12 +76,12 @@ const onEditSubmit = (event) => {
   event.preventDefault()
   profileName.textContent = popupFormName.value
   profileVocation.textContent = popupFormVocation.value
-  onCloseClick(popupEdit)
+  closePopup(popupEdit)
 }
 
 // Функция на открытие окна popupAdd
 const onAddClick = () => {
-    onOpenClick(popupAdd)
+  openPopup(popupAdd)
   }
 
  //Функция на лайк карточки
@@ -97,7 +97,7 @@ function onDeleteCLick (event){
 
 //Функция на открытие окна popupImage
 function openPopupImage (e){
-  onOpenClick(popupImage)
+  openPopup(popupImage)
   // Присвоение ссылки PopupImage 
   popupImage.querySelector('.popup__image').src = e.currentTarget.src
   // Присвоение названия картинки PopupImage 
@@ -105,34 +105,42 @@ function openPopupImage (e){
 
 } 
 
+const createCard = (element) => {
+
+  const cardElement = cardTemplateElement.content.cloneNode(true)
+
+  cardElement.querySelector('.elements__name').textContent = element.name
+  cardElement.querySelector('.elements__image').src = element.link
+  cardElement.querySelector('.elements__image').alt = element.name
+  
+  // ЛАЙК
+  cardElement.querySelector('.elements__like').addEventListener('click', onLikeClick)
+  
+  //УДАЛЕНИЕ
+  cardElement.querySelector('.elements__delete').addEventListener('click', onDeleteCLick)
+  
+  // КАРТОЧКА
+  cardElement.querySelector('.elements__image').addEventListener('click', openPopupImage)
+
+  return(cardElement)
+}
+
 //Клонирование массива
 const renderCards = (element) => {
-const newCardElement = cardTemplateElement.content.cloneNode(true)
-
-newCardElement.querySelector('.elements__name').textContent = element.name
-newCardElement.querySelector('.elements__image').src = element.link
-
-// ЛАЙК
-newCardElement.querySelector('.elements__like').addEventListener('click', onLikeClick)
-
-//УДАЛЕНИЕ
-newCardElement.querySelector('.elements__delete').addEventListener('click', onDeleteCLick)
-
-// КАРТОЧКА
-newCardElement.querySelector('.elements__image').addEventListener('click', openPopupImage)
-
+const newCardElement = createCard(element)
 elementsGrid.prepend(newCardElement)
 }
 
 // Добавление карточки в массив
-const AddCard = (evt) =>{
+const addCard = (evt) =>{
+    evt.currentTarget.reset()
     evt.preventDefault()
     const addCardElement = {
         name: placeName.value,
         link: placeImageLink.value
   }
     renderCards(addCardElement)
-    onCloseClick(popupAdd) 
+    closePopup(popupAdd) 
   }
 
 initialCards.map(renderCards)
@@ -140,10 +148,10 @@ initialCards.map(renderCards)
 
 editButton.addEventListener('click', onEditClick)
 popupEditForm.addEventListener ('submit', onEditSubmit)
-popupEditCloseButton.addEventListener('click', () => onCloseClick(popupEdit))
+popupEditCloseButton.addEventListener('click', () => closePopup(popupEdit))
 
-popupAddForm.addEventListener('submit', AddCard)
+popupAddForm.addEventListener('submit', addCard)
 addButton.addEventListener ('click', onAddClick)
-popupAddCloseButton.addEventListener('click', () => onCloseClick(popupAdd))
+popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd))
 
-popupImageCloseButton.addEventListener('click', () => onCloseClick(popupImage))
+popupImageCloseButton.addEventListener('click', () => closePopup(popupImage))
