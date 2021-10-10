@@ -33,8 +33,6 @@ const checkInputValidity = (formElement, inputElement, config) => {
   CheckTextValidity(inputElement, config)
   CheckEmailValidity(inputElement, config)
 
-
-   
   if (isInputNotValid) {
     showError(errorElement, inputElement, config);
   }
@@ -43,7 +41,7 @@ const checkInputValidity = (formElement, inputElement, config) => {
   }
 }
 
-const toggleButtonState = (button, isActive, config) =>{
+const toggleButtonState = (button, isActive, config) => {
   if(isActive){
     button.classList.remove(config.inactiveButtonClass)
     button.disabled = false;
@@ -56,14 +54,16 @@ const toggleButtonState = (button, isActive, config) =>{
 const setEventListers = (formElement, config) => {
   const inputList = formElement.querySelectorAll(config.inputSelector);
   const submitButton= formElement.querySelector(config.submitButtonSelector)
+  // const isFormValid = formElement.checkValidity();
 
-
-  Array.from(inputList).forEach(inputElement =>{
-      inputElement.addEventListener('input', (evt)=> {
-      const isFormValid = formElement.checkValidity();
-      checkInputValidity(formElement, inputElement, config);
-      toggleButtonState(submitButton, isFormValid, config)
-    })
+  Array.from(inputList).forEach(inputElement => {
+      // checkInputValidity(formElement, inputElement, config);
+      // toggleButtonState(submitButton, isFormValid, config)
+      inputElement.addEventListener('input', () => {
+        const isFormValid = formElement.checkValidity();
+        checkInputValidity(formElement, inputElement, config);
+        toggleButtonState(submitButton, isFormValid, config)
+      })
   })
 
   formElement.addEventListener('submit', (evt) => {
@@ -94,3 +94,5 @@ const validationConfig = {
 }; 
 
 enableValidation(validationConfig)
+
+// export {enableValidation, validationConfig}

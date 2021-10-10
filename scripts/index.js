@@ -1,3 +1,5 @@
+// import {enableValidation, validationConfig} from './validate.js'
+
 // Переменные окна popapEdit
 const popupEdit = document.querySelector('.popup_type_edit')
 const popupEditForm = popupEdit.querySelector('.popup__form_type_edit') 
@@ -57,6 +59,7 @@ const initialCards = [
 //Общая функция для открытия popup окон
 const openPopup = (modal)=> {
   modal.classList.add('popup_opened')
+  // enableValidation(validationConfig)
 }
 
 const onOverlayClick = (e) => {
