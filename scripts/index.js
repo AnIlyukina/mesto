@@ -59,6 +59,29 @@ const openPopup = (modal)=> {
   modal.classList.add('popup_opened')
 }
 
+const onOverlayClick = (e) => {
+  console.log(e)
+  if(e.target.classList.contains('popup')) {
+    if(e.target.classList.contains('popup_type_edit')){
+      closePopup(popupEdit)
+    } else if (e.target.classList.contains('popup_type_add')){
+      closePopup(popupAdd)
+    } else if (e.target.classList.contains('popup_type_image')){
+      closePopup(popupImage)
+    }
+  }
+}
+
+
+const onEscPressed = (e) => {
+  if(e.key === 'Escape') {
+    closePopup(popupEdit)
+    closePopup(popupAdd)
+    closePopup(popupImage)
+  }
+}
+
+
 //Общая функция для закрытия popup окон
 const closePopup = (modal) => {
   modal.classList.remove('popup_opened')
@@ -82,7 +105,7 @@ const onEditSubmit = (event) => {
 // Функция на открытие окна popupAdd
 const onAddClick = () => {
   openPopup(popupAdd)
-  }
+}
 
  //Функция на лайк карточки
 function onLikeClick (event) {
@@ -145,13 +168,17 @@ const addCard = (evt) =>{
 
 initialCards.map(renderCards)
 
-
 editButton.addEventListener('click', onEditClick)
 popupEditForm.addEventListener ('submit', onEditSubmit)
+popupEdit.addEventListener('click', onOverlayClick)
 popupEditCloseButton.addEventListener('click', () => closePopup(popupEdit))
 
 popupAddForm.addEventListener('submit', addCard)
 addButton.addEventListener ('click', onAddClick)
+popupAdd.addEventListener('click', onOverlayClick)
 popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd))
 
 popupImageCloseButton.addEventListener('click', () => closePopup(popupImage))
+popupImage.addEventListener('click', onOverlayClick)
+
+document.addEventListener('keydown', onEscPressed)

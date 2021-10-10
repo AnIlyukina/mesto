@@ -8,11 +8,33 @@ const hideError = (errorElement, inputElement, config ) => {
   inputElement.classList.remove(config.inputErrorClass)
 }
 
+const CheckTextValidity = (inputElement,config) => {
+  if(inputElement.type === 'text') {
+    if (inputElement.value.length === 0){
+      inputElement.setCustomValidity(config.customMessages.textMismatch)
+    } else if (inputElement.value.length < 2){
+      inputElement.setCustomValidity(config.customMessages.lengthMismatch(inputElement.value.length))
+    } 
+  }
+}
+
+const CheckEmailValidity = (inputElement, config) => {
+  if(inputElement.type === 'url' ){
+    inputElement.setCustomValidity(config.customMessages.emailMismatch)
+  }
+}
+
 
 const checkInputValidity = (formElement, inputElement, config) => {
+  
+  inputElement.setCustomValidity('')
   const isInputNotValid = !inputElement.validity.valid;
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`)
+  CheckTextValidity(inputElement, config)
+  CheckEmailValidity(inputElement, config)
 
+
+   
   if (isInputNotValid) {
     showError(errorElement, inputElement, config);
   }
@@ -29,15 +51,12 @@ const toggleButtonState = (button, isActive, config) =>{
     button.classList.add(config.inactiveButtonClass)
     button.disabled = 'disabled';
   }
-
 }
-
-
 
 const setEventListers = (formElement, config) => {
   const inputList = formElement.querySelectorAll(config.inputSelector);
   const submitButton= formElement.querySelector(config.submitButtonSelector)
-  
+
 
   Array.from(inputList).forEach(inputElement =>{
       inputElement.addEventListener('input', (evt)=> {
@@ -47,14 +66,10 @@ const setEventListers = (formElement, config) => {
     })
   })
 
-
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     console.log('отправка формы')
   })
-
-
-
 }
 
 const enableValidation = (config) =>{
@@ -71,7 +86,11 @@ const validationConfig = {
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
- 
+  customMessages:{
+    textMismatch: 'Вы пропустили это поле',
+    lengthMismatch: (count) => `Минимальное количество символов: 2. Длина текста сейчас: ${count}.`,
+    emailMismatch: 'Введите адрес сайта'
+  }
 }; 
 
 enableValidation(validationConfig)
