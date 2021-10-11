@@ -8,30 +8,12 @@ const hideError = (errorElement, inputElement, config ) => {
   inputElement.classList.remove(config.inputErrorClass)
 }
 
-const CheckTextValidity = (inputElement,config) => {
-  if(inputElement.type === 'text') {
-    if (inputElement.value.length === 0){
-      inputElement.setCustomValidity(config.customMessages.textMismatch)
-    } else if (inputElement.value.length < 2){
-      inputElement.setCustomValidity(config.customMessages.lengthMismatch(inputElement.value.length))
-    } 
-  }
-}
-
-const CheckEmailValidity = (inputElement, config) => {
-  if(inputElement.type === 'url' ){
-    inputElement.setCustomValidity(config.customMessages.emailMismatch)
-  }
-}
-
-
 const checkInputValidity = (formElement, inputElement, config) => {
   
-  inputElement.setCustomValidity('')
+
   const isInputNotValid = !inputElement.validity.valid;
   const errorElement = formElement.querySelector(`#${inputElement.id}-error`)
-  CheckTextValidity(inputElement, config)
-  CheckEmailValidity(inputElement, config)
+  
 
   if (isInputNotValid) {
     showError(errorElement, inputElement, config);
@@ -54,11 +36,9 @@ const toggleButtonState = (button, isActive, config) => {
 const setEventListers = (formElement, config) => {
   const inputList = formElement.querySelectorAll(config.inputSelector);
   const submitButton= formElement.querySelector(config.submitButtonSelector)
-  // const isFormValid = formElement.checkValidity();
+
 
   Array.from(inputList).forEach(inputElement => {
-      // checkInputValidity(formElement, inputElement, config);
-      // toggleButtonState(submitButton, isFormValid, config)
       inputElement.addEventListener('input', () => {
         const isFormValid = formElement.checkValidity();
         checkInputValidity(formElement, inputElement, config);
@@ -86,13 +66,7 @@ const validationConfig = {
   submitButtonSelector: '.popup__button',
   inactiveButtonClass: 'popup__button_disabled',
   inputErrorClass: 'popup__input_type_error',
-  customMessages:{
-    textMismatch: 'Вы пропустили это поле',
-    lengthMismatch: (count) => `Минимальное количество символов: 2. Длина текста сейчас: ${count}.`,
-    emailMismatch: 'Введите адрес сайта'
-  }
 }; 
 
 enableValidation(validationConfig)
 
-// export {enableValidation, validationConfig}
