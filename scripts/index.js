@@ -60,6 +60,8 @@ const onEscPressed = (e) => {
 //Общая функция для закрытия popup окон
 const closePopup = (modal) => {
   modal.classList.remove('popup_opened')
+  window.removeEventListener('keydown', onEscPressed)
+  modal.removeEventListener('mousedown', onOverlayClick)
 }
 
 //Функция на открытие окна popupEdit
