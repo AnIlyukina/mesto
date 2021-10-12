@@ -1,3 +1,5 @@
+import {initialCards} from './initialCards.js'
+
 // Переменные окна popapEdit
 const popupEdit = document.querySelector('.popup_type_edit')
 const popupEditForm = popupEdit.querySelector('.popup__form_type_edit') 
@@ -11,10 +13,13 @@ const popupAddCloseButton = popupAdd.querySelector('.popup__close')
 const placeName = popupAdd.querySelector('.popup__input_type_title')
 const placeImageLink = popupAdd.querySelector('.popup__input_type_link')
 const popupAddForm = popupAdd.querySelector('.popup__form_type_add') 
+const popupAddButtonSave = popupAdd.querySelector('.popup__form-save')
 
 //Переменные окна popapImage
 const popupImage = document.querySelector('.popup_type_image')
 const popupImageCloseButton = popupImage.querySelector('.popup__close') 
+const popupImageCard = popupImage.querySelector('.popup__image')
+const popupImageTitle =   popupImage.querySelector('.popup__image-title')
 
 //Переменныe секции Profile
 const editButton = document.querySelector('.profile__edit-button') 
@@ -27,61 +32,30 @@ const elementsGrid = document.querySelector('.elements__grid')
 
 const cardTemplateElement = document.querySelector('.elements__template')
 
-const initialCards = [
-  {
-    name: 'Стамбул',
-    link: 'https://images.unsplash.com/photo-1628936969837-e3afd8427bd8?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1064&q=80.jpg',
-  },
-  {
-    name: 'Греция',
-    link: 'https://images.unsplash.com/photo-1618500031461-a5fc01e96763?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80.jpg',
-  },
-  {
-    name: 'Мальдивы',
-    link: 'https://images.unsplash.com/photo-1527179528411-4219e0714bcc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2864&q=80.jpg',
-  },
-  {
-    name: 'Италия',
-    link: 'https://images.unsplash.com/photo-1582204545593-1356b96cab4b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1035&q=80.jpg',
-  },
-  {
-    name: 'Сингапур',
-    link: 'https://images.unsplash.com/photo-1525625293386-3f8f99389edd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1652&q=80.jpg',
-  },
-  {
-    name: 'Москва',
-    link: 'https://images.unsplash.com/photo-1576413326475-ea6c788332fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2128&q=80.jpg',
-  }
-]; 
+
 
 //Общая функция для открытия popup окон
 const openPopup = (modal)=> {
   modal.classList.add('popup_opened')
-  // enableValidation(validationConfig)
+  window.addEventListener('keydown', onEscPressed)
+  modal.addEventListener('mousedown', onOverlayClick)
 }
 
+//Общая функции для закрытия popup oкон при нажатии на overlay
 const onOverlayClick = (e) => {
-  console.log(e)
-  if(e.target.classList.contains('popup')) {
-    if(e.target.classList.contains('popup_type_edit')){
-      closePopup(popupEdit)
-    } else if (e.target.classList.contains('popup_type_add')){
-      closePopup(popupAdd)
-    } else if (e.target.classList.contains('popup_type_image')){
-      closePopup(popupImage)
-    }
+  const openedPopup = document.querySelector('.popup_opened');
+  if(e.target.classList.contains('popup_opened')) {
+    closePopup(openedPopup); 
   }
 }
 
-
+//Общая функции для закрытия popup oкон при нажатии на ESC
 const onEscPressed = (e) => {
+  const openedPopup = document.querySelector('.popup_opened');
   if(e.key === 'Escape') {
-    closePopup(popupEdit)
-    closePopup(popupAdd)
-    closePopup(popupImage)
+    closePopup(openedPopup); 
   }
 }
-
 
 //Общая функция для закрытия popup окон
 const closePopup = (modal) => {
@@ -123,19 +97,22 @@ function onDeleteCLick (event){
 function openPopupImage (e){
   openPopup(popupImage)
   // Присвоение ссылки PopupImage 
-  popupImage.querySelector('.popup__image').src = e.currentTarget.src
+  popupImageCard.src = e.currentTarget.src
+  // Присвоение alt картинки PopupImage 
+  popupImageCard.alt = e.currentTarget.alt
   // Присвоение названия картинки PopupImage 
-  popupImage.querySelector('.popup__image-title').textContent = e.currentTarget.parentElement.querySelector('.elements__name').textContent
+  popupImageTitle.textContent = e.currentTarget.alt
 
 } 
 
 const createCard = (element) => {
 
   const cardElement = cardTemplateElement.content.cloneNode(true)
+  const elementImage = cardElement.querySelector('.elements__image')
 
   cardElement.querySelector('.elements__name').textContent = element.name
-  cardElement.querySelector('.elements__image').src = element.link
-  cardElement.querySelector('.elements__image').alt = element.name
+  elementImage.src = element.link
+  elementImage.alt = element.name
   
   // ЛАЙК
   cardElement.querySelector('.elements__like').addEventListener('click', onLikeClick)
@@ -165,21 +142,18 @@ const addCard = (evt) =>{
     renderCards(addCardElement)
     closePopup(popupAdd) 
     evt.currentTarget.reset()
+    popupAddButtonSave.setAttribute('disabled', 'disabled');
+    popupAddButtonSave.classList.add('popup__button_disabled');
   }
 
 initialCards.map(renderCards)
 
 editButton.addEventListener('click', onEditClick)
 popupEditForm.addEventListener ('submit', onEditSubmit)
-popupEdit.addEventListener('click', onOverlayClick)
 popupEditCloseButton.addEventListener('click', () => closePopup(popupEdit))
 
 popupAddForm.addEventListener('submit', addCard)
 addButton.addEventListener ('click', onAddClick)
-popupAdd.addEventListener('click', onOverlayClick)
 popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd))
 
 popupImageCloseButton.addEventListener('click', () => closePopup(popupImage))
-popupImage.addEventListener('click', onOverlayClick)
-
-document.addEventListener('keydown', onEscPressed)
