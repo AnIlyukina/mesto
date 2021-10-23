@@ -1,54 +1,55 @@
-import { Card } from './Card.js';
-import { formProfile,formAdd } from './FormValidator.js'
+import { Card, initialCards } from './Card.js';
+import { validationConfig, FormValidator } from './FormValidator.js'
 
-// // Переменные окна popapEdit
+// Универсальный класс popup
+const popups = document.querySelectorAll('.popup')
+
+// Переменные окна popapEdit
 const popupEdit = document.querySelector('.popup_type_edit')
 const popupEditForm = popupEdit.querySelector('.popup__form_type_edit') 
-const popupEditCloseButton = popupEdit.querySelector('.popup__close') 
 const popupFormName = popupEdit.querySelector ('.popup__input_type_name') 
 const popupFormVocation = popupEdit.querySelector ('.popup__input_type_vocation')
 
-// // // Переменные окна popapAdd
+// Переменные окна popapAdd
 const popupAdd = document.querySelector('.popup_type_add')
-const popupAddCloseButton = popupAdd.querySelector('.popup__close') 
 const placeName = popupAdd.querySelector('.popup__input_type_title')
 const placeImageLink = popupAdd.querySelector('.popup__input_type_link')
 const popupAddForm = popupAdd.querySelector('.popup__form_type_add') 
 const popupAddButtonSave = popupAdd.querySelector('.popup__form-save')
 
-// //Переменные окна popapImage
+//Переменные окна popapImage
 const popupImage = document.querySelector('.popup_type_image')
-const popupImageCloseButton = popupImage.querySelector('.popup__close') 
 
-// //Переменныe секции Profile
+
+//Переменныe секции Profile
 const editButton = document.querySelector('.profile__edit-button') 
 const profileName = document.querySelector('.profile__info-name') 
 const profileVocation = document.querySelector('.profile__info-vocation') 
 const addButton = document.querySelector('.profile__add-button')
 
+// Переменные section element
+const elementGrid = document.querySelector('.elements__grid')
+
+//экземпляр класса для проверки валидации popapEdit
+const formProfile = new FormValidator(validationConfig, '.popup__form_type_edit')
+formProfile.enableValidation();
+
+//экземпляр класса для проверки валидации popapAdd
+const formAdd = new FormValidator(validationConfig, '.popup__form_type_add')
+formAdd.enableValidation();
 
 //Общая функция для открытия popup окон
 export const openPopup = (modal)=> {
 
-  formProfile.enableValidation();
-  formAdd.enableValidation();
   modal.classList.add('popup_opened')
   window.addEventListener('keydown', onEscPressed)
-  modal.addEventListener('mousedown', onOverlayClick)
-}
-
-// //Общая функции для закрытия popup oкон при нажатии на overlay
-const onOverlayClick = (e) => {
-  const openedPopup = document.querySelector('.popup_opened');
-  if(e.target.classList.contains('popup_opened')) {
-    closePopup(openedPopup); 
-  }
 }
 
 // //Общая функции для закрытия popup oкон при нажатии на ESC
 const onEscPressed = (e) => {
-  const openedPopup = document.querySelector('.popup_opened');
+  
   if(e.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
     closePopup(openedPopup); 
   }
 }
@@ -58,7 +59,6 @@ const closePopup = (modal) => {
 
   modal.classList.remove('popup_opened')
   window.removeEventListener('keydown', onEscPressed)
-  modal.removeEventListener('mousedown', onOverlayClick)
 }
 
 // //Функция на открытие окна popupEdit
@@ -81,33 +81,50 @@ const onAddClick = () => {
   openPopup(popupAdd)
 }
 
-// Добавление карточки в массив
+//Функция для создания новой карточки
+const createCard = (item) =>{
+  const card = new Card(item, '.elements__template');
+  const cardElement = card.generateCard();
+  return cardElement 
+}
+
+// Добавление карточек из готового массива
+initialCards.forEach((item) => {
+  const element = createCard(item)
+  elementGrid.append(element);
+});
+
+// Добавление новой карточки в массив
 const addCard = (evt) =>{
   evt.preventDefault() 
     const addCardElement = {
         name: placeName.value,
         link: placeImageLink.value
       }
-  
-  const card = new Card(addCardElement, '.elements__template');
-  const cardElement = card.generateCard();
-  document.querySelector('.elements__grid').prepend(cardElement);
+
+  const newElement = createCard(addCardElement)
+  elementGrid.prepend(newElement);
 
   closePopup(popupAdd) 
   evt.currentTarget.reset()
-  popupAddButtonSave.setAttribute('disabled', 'disabled');
-  popupAddButtonSave.classList.add('popup__button_disabled');
-
 }
 
 editButton.addEventListener('click', onEditClick)
 popupEditForm.addEventListener ('submit', onEditSubmit)
-popupEditCloseButton.addEventListener('click', () => closePopup(popupEdit))
+
 
 popupAddForm.addEventListener('submit', addCard)
 addButton.addEventListener ('click', onAddClick)
-popupAddCloseButton.addEventListener('click', () => closePopup(popupAdd))
 
-popupImageCloseButton.addEventListener('click', () => closePopup(popupImage))
+//  обработчики событий для Оверлея и Крестиков
 
-
+popups.forEach((popup) => {
+    popup.addEventListener('click', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+        if (evt.target.classList.contains('popup__close')) {
+          closePopup(popup)
+        }
+    })
+})

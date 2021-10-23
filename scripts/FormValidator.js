@@ -13,6 +13,9 @@ class FormValidator {
     this._inputErrorClass = validationConfig.inputErrorClass
     this._inactiveButtonClass = validationConfig.inactiveButtonClass
     this._submitButtonSelector = validationConfig.submitButtonSelector
+    this._form = document.querySelector(this._formSelector) 
+    this._inputsList = this._form.querySelectorAll(this._inputSelector)
+    this._submitButton= this._form.querySelector(this._submitButtonSelector)
   }
   
   _showError(inputElement, errorElement){
@@ -25,19 +28,19 @@ class FormValidator {
     inputElement.classList.remove(this._inputErrorClass)
   }
 
-  _toggleButtonState = (button, isActive) => {
-  if(isActive){
-    button.classList.remove(this._inactiveButtonClass)
-    button.disabled = false;
+  _toggleButtonState = ( isFormValid) => {
+  if(isFormValid){
+    this._submitButton.classList.remove(this._inactiveButtonClass)
+    this._submitButton.disabled = false;
   } else{
-    button.classList.add(this._inactiveButtonClass)
-    button.disabled = 'disabled';
+    this._submitButton.classList.add(this._inactiveButtonClass)
+    this._submitButton.disabled = 'disabled';
   }
 }
 
-  _checkInputValidity = (form, inputElement) => {
+  _checkInputValidity = (inputElement) => {
     const isInputNotValid = !inputElement.validity.valid;
-    const errorElement = form.querySelector(`#${inputElement.id}-error`)
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`)
  
     if(isInputNotValid){
       this._showError(inputElement, errorElement)
@@ -49,25 +52,22 @@ class FormValidator {
 
   _setEventListeners = () => {
 
-    const form = document.querySelector(this._formSelector) 
-    const inputsList = form.querySelectorAll(this._inputSelector)
-    const submitButton= form.querySelector(this._submitButtonSelector)
-    const isFormValid = form.checkValidity();
-    this._toggleButtonState(submitButton,isFormValid)
+    const isFormValid = this._form.checkValidity();
+    this._toggleButtonState(isFormValid)
 
-    Array.from(inputsList).forEach(inputElement => {
+    Array.from(this._inputsList).forEach(inputElement => {
       inputElement.addEventListener('input', (evt) =>{
-        const isFormValid = form.checkValidity();
-        this._checkInputValidity(form, inputElement)
-        this._toggleButtonState(submitButton,isFormValid)
+        const isFormValid = this._form.checkValidity();
+        this._checkInputValidity( inputElement)
+        this._toggleButtonState(isFormValid)
       })
     })
 
-    form.addEventListener('submit', (evt) => {
+    this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
       console.log('отправка формы')
+      this._toggleButtonState(false);
     })
-
   }
 
   enableValidation = () =>{
@@ -76,10 +76,4 @@ class FormValidator {
 }
 
 
-const formProfile = new FormValidator(validationConfig, '.popup__form_type_edit')
-formProfile.enableValidation();
-
-const formAdd = new FormValidator(validationConfig, '.popup__form_type_add')
-formAdd.enableValidation();
-
-export { validationConfig, FormValidator,formProfile,formAdd }; 
+export { validationConfig, FormValidator }; 

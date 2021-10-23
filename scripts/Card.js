@@ -28,9 +28,14 @@ const initialCards = [
   }
 ]; 
 
+// //Переменные окна popapImage
+const popupImage = document.querySelector('.popup_type_image')
+const popupImageCard = popupImage.querySelector('.popup__image')
+const popupImageTitle =   popupImage.querySelector('.popup__image-title')
+
 // Класс, который создаёт карточку 
 
-export class Card {
+class Card {
   constructor(data, cardSelector){
     this._name = data.name;
     this._link = data.link;
@@ -49,10 +54,12 @@ export class Card {
 
   generateCard(){
     this._element = this._getTemplate();
+    this._cardImage =  this._element.querySelector('.elements__image')
+    this._likeButton = this._element.querySelector('.elements__like')
     this._setEventListener();
 
-    this._element.querySelector('.elements__image').src = this._link;
-    this._element.querySelector('.elements__image').alt = this._name;
+    this._cardImage.src = this._link;
+    this._cardImage.alt = this._name;
     this._element.querySelector('.elements__name').textContent = this._name;
 
     return this._element;
@@ -60,7 +67,7 @@ export class Card {
 
 //Функция на лайк карточки
   _onLikeClick(){
-    this._element.querySelector('.elements__like').classList.toggle('elements__like_active');
+    this._likeButton.classList.toggle('elements__like_active');
   }
 
 //Функция на удаление карточки
@@ -71,19 +78,16 @@ export class Card {
 
 //Функция на открытие окна popupImage
   _openPopupImage(){
-    const popupImage = document.querySelector('.popup_type_image')
-    const popupImageCard = popupImage.querySelector('.popup__image')
-    const popupImageTitle =   popupImage.querySelector('.popup__image-title')
 
     openPopup(popupImage);
-     popupImageCard.src =  this._link;
+    popupImageCard.src =  this._link;
     popupImageTitle.textContent = this._name;
     popupImageCard.alt = this._name;
   }
 
 // Обработчики событий на лайк, удаление, открытие попапа с картинкой 
   _setEventListener(){
-    this._element.querySelector('.elements__like').addEventListener('click', () => {
+    this._likeButton.addEventListener('click', () => {
       this._onLikeClick();
     });
 
@@ -91,16 +95,11 @@ export class Card {
       this._onDeleteClick();
     });
 
-    this._element.querySelector('.elements__image').addEventListener('click', () => {
+    this._cardImage.addEventListener('click', () => {
       this._openPopupImage();
     });
 
   }
 }
 
-initialCards.forEach((item) => {
-    const card = new Card(item, '.elements__template');
-    const cardElement = card.generateCard();
-  
-    document.querySelector('.elements__grid').append(cardElement);
-});
+export { Card, initialCards }; 
