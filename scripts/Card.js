@@ -1,5 +1,3 @@
-import { openPopup } from './index.js'; 
-
 // Массив с изначальными карточками
 const initialCards = [
   {
@@ -28,16 +26,13 @@ const initialCards = [
   }
 ]; 
 
-// //Переменные окна popapImage
-const popupImage = document.querySelector('.popup_type_image')
-const popupImageCard = popupImage.querySelector('.popup__image')
-const popupImageTitle =   popupImage.querySelector('.popup__image-title')
 
 // Класс, который создаёт карточку 
 
 class Card {
-  constructor(data, cardSelector){
+  constructor({data, handleCardClick}, cardSelector){
     this._name = data.name;
+    this.handleCardClick = handleCardClick;
     this._link = data.link;
     this._cardSelector = cardSelector;
   }
@@ -56,19 +51,16 @@ class Card {
     this._element = this._getTemplate();
     this._cardImage =  this._element.querySelector('.elements__image')
     this._likeButton = this._element.querySelector('.elements__like')
-    this._setEventListener();
 
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
+    this._setEventListener();
     this._element.querySelector('.elements__name').textContent = this._name;
 
     return this._element;
   }
 
-//Функция на лайк карточки
-  _onLikeClick(){
-    this._likeButton.classList.toggle('elements__like_active');
-  }
+
 
 //Функция на удаление карточки
   _onDeleteClick(){
@@ -76,14 +68,7 @@ class Card {
     cardDelete.remove();
   }
 
-//Функция на открытие окна popupImage
-  _openPopupImage(){
 
-    openPopup(popupImage);
-    popupImageCard.src =  this._link;
-    popupImageTitle.textContent = this._name;
-    popupImageCard.alt = this._name;
-  }
 
 // Обработчики событий на лайк, удаление, открытие попапа с картинкой 
   _setEventListener(){
@@ -95,11 +80,16 @@ class Card {
       this._onDeleteClick();
     });
 
-    this._cardImage.addEventListener('click', () => {
-      this._openPopupImage();
-    });
+    this._cardImage.addEventListener('click', () => { 
+      this.handleCardClick(); 
+    }); 
 
   }
+    //Функция на лайк карточки
+    _onLikeClick(){
+      this._likeButton.classList.toggle('elements__like_active');
+    }
+  
 }
 
 export { Card, initialCards }; 
