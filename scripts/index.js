@@ -1,15 +1,14 @@
 import { Card, initialCards } from './Card.js';
 import { validationConfig, FormValidator } from './FormValidator.js'
 import { Section } from './Section.js';
-import { Popup } from './Popup.js';
-import {UserInfo} from './UserInfo.js'
+import { UserInfo } from './UserInfo.js'
 import { PopupWithImage } from './PopupWithImage.js';
+import { PopupWithForm } from './PopupWithForm.js';
 
 
 // Переменные окна popapEdit
 const popupEdit = document.querySelector('.popup_type_edit')
 const popupEditForm = popupEdit.querySelector('.popup__form_type_edit') 
-
 
 // Переменные окна popapAdd
 const popupAdd = document.querySelector('.popup_type_add')
@@ -17,10 +16,8 @@ const placeName = popupAdd.querySelector('.popup__input_type_title')
 const placeImageLink = popupAdd.querySelector('.popup__input_type_link')
 const popupAddForm = popupAdd.querySelector('.popup__form_type_add') 
 
-
 //Переменные окна popapImage
 const popupImage = document.querySelector('.popup_type_image')
-
 
 //Переменныe секции Profile
 const editButton = document.querySelector('.profile__edit-button') 
@@ -28,29 +25,40 @@ const profileName = document.querySelector('.profile__info-name')
 const profileVocation = document.querySelector('.profile__info-vocation') 
 const addButton = document.querySelector('.profile__add-button')
 
-
 // Переменные section element
 const elementGrid = document.querySelector('.elements__grid');
-
-//экземпляр класса для проверки валидации popapEdit
-const formProfile = new FormValidator(validationConfig, '.popup__form_type_edit')
-formProfile.enableValidation();
-
-//экземпляр класса для проверки валидации popapAdd
-const formAdd = new FormValidator(validationConfig, '.popup__form_type_add')
-formAdd.enableValidation();
-
-//Экземпляр класса popupEdit, отвечающие за его открытие и закрытие
-const openEditPopap = new Popup(popupEdit)
-
-//Экземпляр класса popupAdd, отвечающие за его открытие и закрытие
-const openAddPopup = new Popup (popupAdd)
 
 //Объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
 const userInfoObj = {
   name: profileName,
   vocation: profileVocation,
 }
+
+
+// экземпляр класса для проверки валидации popapEdit
+const formProfile = new FormValidator(validationConfig, '.popup__form_type_edit')
+formProfile.enableValidation();
+
+
+// экземпляр класса для проверки валидации popapAdd
+const formAdd = new FormValidator(validationConfig, '.popup__form_type_add')
+formAdd.enableValidation();
+
+
+const openEditPopap =  new PopupWithForm({
+  popupSelector: popupEdit,
+  handleFormSubmit: (event) => {
+    onEditSubmit(event)
+  }
+}) 
+
+const openAddPopup =  new PopupWithForm({
+  popupSelector: popupAdd,
+  handleFormSubmit: (event) => {
+    addCard(event)
+  }
+}) 
+
 
 // Экземпляр, отвечающий за управление отображения информации о пользователе страницы
 const userInform = new UserInfo({
@@ -84,7 +92,7 @@ const createCard = (item) =>{
       openPopupImage.open(event)
     }
   },
-    '.elements__template');
+  '.elements__template');
   const cardElement = card.generateCard();
   return cardElement 
 }
@@ -103,24 +111,24 @@ elementGrid
 cardsList.renderItems()
 
 // Добавление новой карточки в массив
-const addCard = (evt) =>{
+const addCard = (evt) => {
   evt.preventDefault() 
-    const addCardElement = {
-        name: placeName.value,
-        link: placeImageLink.value
-      }
+  const addCardElement = {
+      name: placeName.value,
+      link: placeImageLink.value
+  }
+
 
   const newElement = createCard(addCardElement)
-  elementGrid.prepend(newElement);
+  elementGrid.prepend(newElement); 
 
   openAddPopup.close() 
   evt.currentTarget.reset()
 }
 
 editButton.addEventListener('click', onEditClick)
-popupEditForm.addEventListener ('submit', onEditSubmit)
+// popupEditForm.addEventListener ('submit', onEditSubmit)
 
 
-popupAddForm.addEventListener('submit', addCard)
+// popupAddForm.addEventListener('submit', addCard)
 addButton.addEventListener ('click', onAddClick)
-

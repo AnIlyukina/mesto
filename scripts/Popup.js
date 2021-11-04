@@ -1,4 +1,3 @@
-
 export class Popup{
   constructor(popupSelector){
     this._popupSelector = popupSelector;
@@ -26,7 +25,7 @@ export class Popup{
     
   }
 
-  open () {
+  open() {
     this._popupSelector.classList.add('popup_opened')
     this.setEventListeners()
   }
