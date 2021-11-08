@@ -1,8 +1,5 @@
 import { Popup } from "./Popup.js";
-
-const popupImage = document.querySelector('.popup_type_image')
-const popupImageCard = popupImage.querySelector('.popup__image')
-const popupImageTitle =   popupImage.querySelector('.popup__image-title')
+import {popupImageCard, popupImageTitle } from "../utils/constants.js";
 
 export class PopupWithImage extends Popup{
   constructor(data,popupSelector){

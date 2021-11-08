@@ -20,7 +20,6 @@ export class PopupWithForm extends Popup{
   }
 
   onSubmit = (evt) => {
-    console.log('DSSD')
     evt.preventDefault();
     const inputs = this._getInputValues()
     this._handleFormSubmit(evt, inputs)
@@ -34,8 +33,6 @@ export class PopupWithForm extends Popup{
   close = () => {
     this._form.removeEventListener('submit', this.onSubmit)
     super.close()
-    console.log('asdasdas')
   }
-
 
 }

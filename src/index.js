@@ -1,36 +1,10 @@
-import { Card, initialCards } from './Card.js';
-import { validationConfig, FormValidator } from './FormValidator.js'
-import { Section } from './Section.js';
-import { UserInfo } from './UserInfo.js'
-import { PopupWithImage } from './PopupWithImage.js';
-import { PopupWithForm } from './PopupWithForm.js';
-
-
-// Переменные окна popapEdit
-const popupEdit = document.querySelector('.popup_type_edit')
-
-
-// Переменные окна popapAdd
-const popupAdd = document.querySelector('.popup_type_add')
-
-
-//Переменные окна popapImage
-const popupImage = document.querySelector('.popup_type_image')
-
-//Переменныe секции Profile
-const editButton = document.querySelector('.profile__edit-button') 
-const profileName = document.querySelector('.profile__info-name') 
-const profileVocation = document.querySelector('.profile__info-vocation') 
-const addButton = document.querySelector('.profile__add-button')
-
-// Переменные section element
-const elementGrid = document.querySelector('.elements__grid');
-
-//Объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
-const userInfoObj = {
-  name: profileName,
-  vocation: profileVocation,
-}
+import { Card, initialCards } from './components/Card.js';
+import { validationConfig, FormValidator } from './components/FormValidator.js'
+import { Section } from './components/Section.js';
+import { UserInfo } from './components/UserInfo.js'
+import { PopupWithImage } from './components/PopupWithImage.js';
+import { PopupWithForm } from './components/PopupWithForm.js';
+import { popupEdit, popupAdd, popupImage, editButton, addButton, elementGrid, userInfoObj } from './utils/constants.js';
 
 
 // экземпляр класса для проверки валидации popapEdit
@@ -52,9 +26,7 @@ const openEditPopap =  new PopupWithForm({
 
 const openAddPopup =  new PopupWithForm({
   popupSelector: popupAdd,
-  handleFormSubmit: (event, inputs)  => {
-    addCard(event, inputs)
-  }
+  handleFormSubmit: (event, inputs) => {addCard(event, inputs)}
 }) 
 
 
@@ -116,13 +88,12 @@ const addCard = (evt, inputs) => {
       link: inputs.link,
   }
   const newElement = createCard(addCardElement)
-  elementGrid.prepend(newElement); 
+  cardsList.addItem(newElement)
 
   openAddPopup.close()
   evt.currentTarget.reset()
 }
 
 editButton.addEventListener('click', onEditClick)
-
 
 addButton.addEventListener ('click', onAddClick)
