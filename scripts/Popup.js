@@ -13,7 +13,7 @@ export class Popup{
   setEventListeners(){
     this._closeButton.addEventListener('click', () => {
       this.close()
-    });
+    })
     window.addEventListener('keydown', (event) =>{
       this._handleEscClose(event);
     })

@@ -8,13 +8,11 @@ import { PopupWithForm } from './PopupWithForm.js';
 
 // Переменные окна popapEdit
 const popupEdit = document.querySelector('.popup_type_edit')
-const popupEditForm = popupEdit.querySelector('.popup__form_type_edit') 
+
 
 // Переменные окна popapAdd
 const popupAdd = document.querySelector('.popup_type_add')
-const placeName = popupAdd.querySelector('.popup__input_type_title')
-const placeImageLink = popupAdd.querySelector('.popup__input_type_link')
-const popupAddForm = popupAdd.querySelector('.popup__form_type_add') 
+
 
 //Переменные окна popapImage
 const popupImage = document.querySelector('.popup_type_image')
@@ -54,8 +52,8 @@ const openEditPopap =  new PopupWithForm({
 
 const openAddPopup =  new PopupWithForm({
   popupSelector: popupAdd,
-  handleFormSubmit: (event) => {
-    addCard(event)
+  handleFormSubmit: (event, inputs)  => {
+    addCard(event, inputs)
   }
 }) 
 
@@ -111,24 +109,20 @@ elementGrid
 cardsList.renderItems()
 
 // Добавление новой карточки в массив
-const addCard = (evt) => {
+const addCard = (evt, inputs) => {
   evt.preventDefault() 
   const addCardElement = {
-      name: placeName.value,
-      link: placeImageLink.value
+      name: inputs.title,
+      link: inputs.link,
   }
-
-
   const newElement = createCard(addCardElement)
   elementGrid.prepend(newElement); 
 
-  openAddPopup.close() 
+  openAddPopup.close()
   evt.currentTarget.reset()
 }
 
 editButton.addEventListener('click', onEditClick)
-// popupEditForm.addEventListener ('submit', onEditSubmit)
 
 
-// popupAddForm.addEventListener('submit', addCard)
 addButton.addEventListener ('click', onAddClick)
