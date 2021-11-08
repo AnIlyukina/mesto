@@ -9,8 +9,10 @@ export class UserInfo{
   }
 
   getUserInfo(){
-    popupFormName.value = this._name.textContent
-    popupFormVocation.value = this._vocation.textContent
+    return {
+      userName: popupFormName.value = this._name.textContent,
+      userVocation: popupFormVocation.value = this._vocation.textContent,
+    }
   }
 
   setUserInfo(){
