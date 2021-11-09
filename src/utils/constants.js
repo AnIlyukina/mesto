@@ -8,7 +8,6 @@ export const popupAdd = document.querySelector('.popup_type_add')
 
 //Переменные окна popapImage
 export const popupImage = document.querySelector('.popup_type_image')
-
 export const popupImageCard = popupImage.querySelector('.popup__image')
 export const popupImageTitle =   popupImage.querySelector('.popup__image-title')
 
@@ -54,3 +53,10 @@ export const initialCards = [
     link: 'https://images.unsplash.com/photo-1576413326475-ea6c788332fb?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2128&q=80.jpg',
   }
 ]; 
+
+export const validationConfig = {
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__button',
+  inactiveButtonClass: 'popup__button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+}; 
