@@ -1,34 +1,31 @@
-import {validationConfig} from '../utils/constants.js'
-
-class FormValidator {
+export class FormValidator {
   constructor(validationConfig, formSelector){
-    this._formSelector = formSelector
     this._inputSelector = validationConfig.inputSelector
     this._inputErrorClass = validationConfig.inputErrorClass
     this._inactiveButtonClass = validationConfig.inactiveButtonClass
     this._submitButtonSelector = validationConfig.submitButtonSelector
-    this._form = document.querySelector(this._formSelector) 
+    this._form = document.querySelector(formSelector)
     this._inputsList = this._form.querySelectorAll(this._inputSelector)
     this._submitButton= this._form.querySelector(this._submitButtonSelector)
   }
   
-  _showError(inputElement, errorElement){
+  _showError = (inputElement, errorElement) => {
     errorElement.textContent = inputElement.validationMessage;
     inputElement.classList.add(this._inputErrorClass)
   }
 
-  _hideError(inputElement, errorElement){
-    errorElement.textContent = ' ';
+  _hideError = (inputElement, errorElement) => {
+    errorElement.textContent = '';
     inputElement.classList.remove(this._inputErrorClass)
   }
 
-  _toggleButtonState = ( isFormValid) => {
+  _toggleButtonState = (isFormValid) => {
   if(isFormValid){
     this._submitButton.classList.remove(this._inactiveButtonClass)
     this._submitButton.disabled = false;
   } else{
     this._submitButton.classList.add(this._inactiveButtonClass)
-    this._submitButton.disabled = 'disabled';
+    this._submitButton.disabled = true;
   }
 }
 
@@ -50,7 +47,7 @@ class FormValidator {
     this._toggleButtonState(isFormValid)
 
     Array.from(this._inputsList).forEach(inputElement => {
-      inputElement.addEventListener('input', (evt) =>{
+      inputElement.addEventListener('input', () =>{
         const isFormValid = this._form.checkValidity();
         this._checkInputValidity( inputElement)
         this._toggleButtonState(isFormValid)
@@ -59,15 +56,14 @@ class FormValidator {
 
     this._form.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      console.log('отправка формы')
       this._toggleButtonState(false);
     })
   }
 
-  enableValidation = () =>{
+  enableValidation = () => {
     this._setEventListeners();
   }
 }
 
 
-export { validationConfig, FormValidator }; 
+

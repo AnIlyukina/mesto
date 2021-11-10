@@ -1,16 +1,13 @@
-import {initialCards} from '../utils/constants.js'
-
-
 // Класс, который создаёт карточку 
-class Card {
+export class Card {
   constructor({data, handleCardClick}, cardSelector){
     this._name = data.name;
-    this.handleCardClick = handleCardClick;
+    this._handleCardClick = handleCardClick;
     this._link = data.link;
     this._cardSelector = cardSelector;
   }
 
-  _getTemplate() {
+  _getTemplate = () => {
     const cardElement = document
     .querySelector(this._cardSelector)
     .content
@@ -20,31 +17,33 @@ class Card {
     return cardElement;
   }
 
-  generateCard(){
+  generateCard = () => {
     this._element = this._getTemplate();
     this._cardImage =  this._element.querySelector('.elements__image')
     this._likeButton = this._element.querySelector('.elements__like')
-
     this._cardImage.src = this._link;
     this._cardImage.alt = this._name;
-    this._setEventListener();
+    this._setEventListeners();
     this._element.querySelector('.elements__name').textContent = this._name;
 
     return this._element;
   }
 
-
+  //Функция на лайк карточки
+  _onLikeClick = () => {
+    this._likeButton.classList.toggle('elements__like_active');
+  }
 
 //Функция на удаление карточки
-  _onDeleteClick(){
-    const cardDelete = this._element.closest('.elements__element')
-    cardDelete.remove();
+  _onDeleteClick = () => {
+    this._element.remove();
+    this._element = null;
   }
 
 
 
 // Обработчики событий на лайк, удаление, открытие попапа с картинкой 
-  _setEventListener(){
+  _setEventListeners () {
     this._likeButton.addEventListener('click', () => {
       this._onLikeClick();
     });
@@ -53,16 +52,10 @@ class Card {
       this._onDeleteClick();
     });
 
-    this._cardImage.addEventListener('click', () => { 
-      this.handleCardClick(); 
+    this._cardImage.addEventListener('click', ({data}) => { 
+      this._handleCardClick({data}); 
     }); 
 
   }
-    //Функция на лайк карточки
-    _onLikeClick(){
-      this._likeButton.classList.toggle('elements__like_active');
-    }
-  
 }
 
-export { Card, initialCards }; 

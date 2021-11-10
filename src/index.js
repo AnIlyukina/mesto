@@ -1,35 +1,64 @@
-import './pages/index.css';
-import { Card, initialCards } from './components/Card.js';
-import { validationConfig, FormValidator } from './components/FormValidator.js'
+// import './pages/index.css';
+import { Card } from './components/Card.js';
+import { FormValidator } from './components/FormValidator.js'
 import { Section } from './components/Section.js';
 import { UserInfo } from './components/UserInfo.js'
 import { PopupWithImage } from './components/PopupWithImage.js';
 import { PopupWithForm } from './components/PopupWithForm.js';
-import { popupEdit, popupAdd, popupImage, editButton, addButton, elementGrid, userInfoObj } from './utils/constants.js';
+import { initialCards, validationConfig, popupFormEdit, popupFormAdd } from './utils/constants.js';
+
+// Переменные окна popapEdit
+export const popupEdit = document.querySelector('.popup_type_edit')
+
+// Переменные окна popapAdd
+export const popupAdd = document.querySelector('.popup_type_add')
+
+//Переменные окна popapImage
+export const popupImage = document.querySelector('.popup_type_image')
+
+//Переменныe секции Profile
+export const editButton = document.querySelector('.profile__edit-button') 
+export const profileName = document.querySelector('.profile__info-name') 
+export const profileVocation = document.querySelector('.profile__info-vocation') 
+export const addButton = document.querySelector('.profile__add-button')
+
+// Переменные section element
+export const elementGrid = document.querySelector('.elements__grid');
+
+//Объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
+export const userInfoObj = {
+  name: profileName,
+  vocation: profileVocation,
+}
 
 
 // экземпляр класса для проверки валидации popapEdit
-const formProfile = new FormValidator(validationConfig, '.popup__form_type_edit')
+const formProfile = new FormValidator(validationConfig, popupFormEdit)
 formProfile.enableValidation();
 
 
 // экземпляр класса для проверки валидации popapAdd
-const formAdd = new FormValidator(validationConfig, '.popup__form_type_add')
+const formAdd = new FormValidator(validationConfig, popupFormAdd )
 formAdd.enableValidation();
 
 
-const openEditPopap =  new PopupWithForm({
-  popupSelector: popupEdit,
-  handleFormSubmit: (event) => {
-    onEditSubmit(event)
+const popupEditProfile =  new PopupWithForm({
+  popupElement: popupEdit,
+  handleFormSubmit: () => {
+    onEditSubmit()
   }
 }) 
 
-const openAddPopup =  new PopupWithForm({
-  popupSelector: popupAdd,
-  handleFormSubmit: (event, inputs) => {addCard(event, inputs)}
+popupEditProfile.setEventListeners();
+
+const popupAddCard =  new PopupWithForm({
+  popupElement: popupAdd,
+  handleFormSubmit: (inputs) => {
+    addCard( inputs)
+  }
 }) 
 
+popupAddCard.setEventListeners();
 
 // Экземпляр, отвечающий за управление отображения информации о пользователе страницы
 const userInform = new UserInfo({
@@ -37,30 +66,33 @@ const userInform = new UserInfo({
 })
 
 //Функция на открытие окна popupEdit
-const onEditClick = () => {
+const openPopupProfile = () => {
   userInform.getUserInfo();
-  openEditPopap.open();
+  popupEditProfile.open();
 }
 
 //Функция на сохранения данных popupEdit
-const onEditSubmit = (event) => {
-  event.preventDefault()
+const onEditSubmit = () => {
   userInform.setUserInfo()
-  openEditPopap.close()
+  popupEditProfile.close()
 }
 
 // Функция на открытие окна popupAdd
-const onAddClick = () => {
-  openAddPopup.open()
+const  openPopupAddCard = () => {
+  popupAddCard.open()
 }
+
+const openPopupImage = new PopupWithImage(popupImage)
+openPopupImage.setEventListeners();
 
 //Функция для создания новой карточки
 const createCard = (item) =>{
   const card = new Card({
     data: item,
-    handleCardClick: (event) =>{
-      const openPopupImage = new PopupWithImage(item, popupImage)
-      openPopupImage.open(event)
+    handleCardClick: (item) =>{
+      openPopupImage.open({
+        data: item
+      })
     }
   },
   '.elements__template');
@@ -70,31 +102,29 @@ const createCard = (item) =>{
 
 // Добавление карточек из готового массива
 const cardsList = new Section({
-  items: initialCards,
   renderer:(item) => {
     const element = createCard(item) 
-    cardsList.addItem(element)
+    cardsList.addItemAppend(element)
   }
 },
 elementGrid
 );
 
-cardsList.renderItems()
+cardsList.renderItems(initialCards)
 
 // Добавление новой карточки в массив
-const addCard = (evt, inputs) => {
-  evt.preventDefault() 
+const addCard = ( inputs) => {
+
   const addCardElement = {
       name: inputs.title,
       link: inputs.link,
   }
   const newElement = createCard(addCardElement)
-  cardsList.addItem(newElement)
+  cardsList.addItemPrepend(newElement)
 
-  openAddPopup.close()
-  evt.currentTarget.reset()
+  popupAddCard.close()
 }
 
-editButton.addEventListener('click', onEditClick)
+editButton.addEventListener('click', openPopupProfile)
 
-addButton.addEventListener ('click', onAddClick)
+addButton.addEventListener ('click',  openPopupAddCard)

@@ -8,16 +8,16 @@ export class UserInfo{
     this._vocation = data.vocation;
   }
 
-  getUserInfo(){
+  getUserInfo () {
     return {
-      userName: popupFormName.value = this._name.textContent,
+      userName: popupFormName.value = this._name.textContent, 
       userVocation: popupFormVocation.value = this._vocation.textContent,
     }
   }
 
-  setUserInfo(){
-    this._name.textContent = popupFormName.value
-    this._vocation.textContent = popupFormVocation.value
-  }
+  setUserInfo() {
+    this._name.textContent = popupFormName.value 
+    this._vocation.textContent = popupFormVocation.value 
+  } 
 
 }

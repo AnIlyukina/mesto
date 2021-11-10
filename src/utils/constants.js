@@ -1,30 +1,10 @@
-// Переменные окна popapEdit
-export const popupEdit = document.querySelector('.popup_type_edit')
+//селектор формы Edit 
+export const popupFormEdit = '.popup__form_type_edit';
 
 
-// Переменные окна popapAdd
-export const popupAdd = document.querySelector('.popup_type_add')
+//селектор формы Add
+export const popupFormAdd = '.popup__form_type_add';
 
-
-//Переменные окна popapImage
-export const popupImage = document.querySelector('.popup_type_image')
-export const popupImageCard = popupImage.querySelector('.popup__image')
-export const popupImageTitle =   popupImage.querySelector('.popup__image-title')
-
-//Переменныe секции Profile
-export const editButton = document.querySelector('.profile__edit-button') 
-export const profileName = document.querySelector('.profile__info-name') 
-export const profileVocation = document.querySelector('.profile__info-vocation') 
-export const addButton = document.querySelector('.profile__add-button')
-
-// Переменные section element
-export const elementGrid = document.querySelector('.elements__grid');
-
-//Объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
-export const userInfoObj = {
-  name: profileName,
-  vocation: profileVocation,
-}
 
 // Массив с изначальными карточками
 export const initialCards = [
@@ -54,6 +34,8 @@ export const initialCards = [
   }
 ]; 
 
+
+//объект настроек всеx нужныx классов и селекторов элементов формы
 export const validationConfig = {
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
