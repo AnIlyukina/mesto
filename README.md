@@ -7,9 +7,12 @@ Alt-H1
 
 **Технологии**
 
-Файловая структура организована по БЭМу.
-Вёрстка адаптивная
-Реализована работа “pop-up" при помощи JavaScript
+:white_check_mark: Файловая структура организована по БЭМ.    
+:white_check_mark: Вёрстка адаптивная    
+:white_check_mark: Код объектно-ориентирован (каждый класс описан в отдельном JS-файле и импортирован в index.js)    
+:white_check_mark: Осуществлена проверка валидации форм    
+:white_check_mark: Настроена сборка Webpack    
+
 
 * [Ссылка на GitHub Pages](https://anilyukina.github.io/mesto/index.html)
 

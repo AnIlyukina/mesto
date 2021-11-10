@@ -1,32 +1,35 @@
-// import './pages/index.css';
-import { Card } from './components/Card.js';
-import { FormValidator } from './components/FormValidator.js'
-import { Section } from './components/Section.js';
-import { UserInfo } from './components/UserInfo.js'
-import { PopupWithImage } from './components/PopupWithImage.js';
-import { PopupWithForm } from './components/PopupWithForm.js';
-import { initialCards, validationConfig, popupFormEdit, popupFormAdd } from './utils/constants.js';
+// import './index.css';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js'
+import { Section } from '../components/Section.js';
+import { UserInfo } from '../components/UserInfo.js'
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { initialCards, validationConfig, popupFormEdit, popupFormAdd } from '../utils/constants.js';
 
 // Переменные окна popapEdit
-export const popupEdit = document.querySelector('.popup_type_edit')
+const popupEdit = document.querySelector('.popup_type_edit')
+const popupFormName = popupEdit.querySelector ('.popup__input_type_name') 
+const popupFormVocation = popupEdit.querySelector ('.popup__input_type_vocation')
+
 
 // Переменные окна popapAdd
-export const popupAdd = document.querySelector('.popup_type_add')
+const popupAdd = document.querySelector('.popup_type_add')
 
 //Переменные окна popapImage
-export const popupImage = document.querySelector('.popup_type_image')
+const popupImage = document.querySelector('.popup_type_image')
 
 //Переменныe секции Profile
-export const editButton = document.querySelector('.profile__edit-button') 
-export const profileName = document.querySelector('.profile__info-name') 
-export const profileVocation = document.querySelector('.profile__info-vocation') 
-export const addButton = document.querySelector('.profile__add-button')
+const editButton = document.querySelector('.profile__edit-button') 
+const profileName = document.querySelector('.profile__info-name') 
+const profileVocation = document.querySelector('.profile__info-vocation') 
+const addButton = document.querySelector('.profile__add-button')
 
 // Переменные section element
-export const elementGrid = document.querySelector('.elements__grid');
+const elementGrid = document.querySelector('.elements__grid');
 
 //Объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
-export const userInfoObj = {
+const userInfoObj = {
   name: profileName,
   vocation: profileVocation,
 }
@@ -48,8 +51,8 @@ const popupEditProfile =  new PopupWithForm({
     onEditSubmit()
   }
 }) 
-
 popupEditProfile.setEventListeners();
+
 
 const popupAddCard =  new PopupWithForm({
   popupElement: popupAdd,
@@ -57,39 +60,49 @@ const popupAddCard =  new PopupWithForm({
     addCard( inputs)
   }
 }) 
-
 popupAddCard.setEventListeners();
+
 
 // Экземпляр, отвечающий за управление отображения информации о пользователе страницы
 const userInform = new UserInfo({
   data: userInfoObj,
 })
 
+
 //Функция на открытие окна popupEdit
 const openPopupProfile = () => {
-  userInform.getUserInfo();
+  const getUserInfo = userInform.getUserInfo();
+  popupFormName.value = getUserInfo.userName
+  popupFormVocation.value = getUserInfo.userVocation;
   popupEditProfile.open();
 }
 
+
 //Функция на сохранения данных popupEdit
 const onEditSubmit = () => {
-  userInform.setUserInfo()
+  userInform.setUserInfo({
+    userName: popupFormName.value, 
+    userVocation: popupFormVocation.value
+  }),
   popupEditProfile.close()
 }
+
 
 // Функция на открытие окна popupAdd
 const  openPopupAddCard = () => {
   popupAddCard.open()
 }
 
+//экземпляр PopupWithImage вставляет в попап картинку с src изображения и подписью к картинке
 const openPopupImage = new PopupWithImage(popupImage)
 openPopupImage.setEventListeners();
+
 
 //Функция для создания новой карточки
 const createCard = (item) =>{
   const card = new Card({
     data: item,
-    handleCardClick: (item) =>{
+    handleCardClick: () =>{
       openPopupImage.open({
         data: item
       })
@@ -111,6 +124,7 @@ elementGrid
 );
 
 cardsList.renderItems(initialCards)
+
 
 // Добавление новой карточки в массив
 const addCard = ( inputs) => {

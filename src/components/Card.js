@@ -7,6 +7,7 @@ export class Card {
     this._cardSelector = cardSelector;
   }
 
+  // метод, который получает готовую разметку перед размещением на страницу
   _getTemplate = () => {
     const cardElement = document
     .querySelector(this._cardSelector)
@@ -17,6 +18,7 @@ export class Card {
     return cardElement;
   }
 
+ // метод, который добавляет данные в разметку
   generateCard = () => {
     this._element = this._getTemplate();
     this._cardImage =  this._element.querySelector('.elements__image')
@@ -29,21 +31,22 @@ export class Card {
     return this._element;
   }
 
-  //Функция на лайк карточки
+//метод класса на лайк карточки
   _onLikeClick = () => {
     this._likeButton.classList.toggle('elements__like_active');
   }
 
-//Функция на удаление карточки
+//метод класса на удаление карточки
   _onDeleteClick = () => {
     this._element.remove();
+    //очистка ссылки на DOM-элемент
     this._element = null;
   }
 
 
 
 // Обработчики событий на лайк, удаление, открытие попапа с картинкой 
-  _setEventListeners () {
+  _setEventListeners = () => {
     this._likeButton.addEventListener('click', () => {
       this._onLikeClick();
     });
@@ -52,10 +55,9 @@ export class Card {
       this._onDeleteClick();
     });
 
-    this._cardImage.addEventListener('click', ({data}) => { 
-      this._handleCardClick({data}); 
+    this._cardImage.addEventListener('click', (data) => { 
+      this._handleCardClick(data); 
     }); 
-
   }
 }
 
