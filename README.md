@@ -18,7 +18,7 @@
 
 Webpack можно запустить вручную из командной строки:
 - `npm run build` - финальная сборка
-- `npm run dev` - запуск локального червера
+- `npm run dev` - запуск локального сервера
     
     
 :dancer:  [Ссылка на GitHub Pages](https://anilyukina.github.io/mesto/index.html)
