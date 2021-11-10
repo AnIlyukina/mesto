@@ -11,7 +11,14 @@
 :white_check_mark: Вёрстка адаптивная    
 :white_check_mark: Код объектно-ориентирован (каждый класс описан в отдельном JS-файле и импортирован в index.js)    
 :white_check_mark: Осуществлена проверка валидации форм    
-:white_check_mark: Настроена сборка Webpack    
+:white_check_mark: Настроена сборка Webpack 
+
+
+***Запуск Webpack***
+Webpack можно запустить вручную из командной строки:
+`npm run build` - финальная сборка
+`npm run dev` - запуск локального червера
+
 
 
 * [Ссылка на GitHub Pages](https://anilyukina.github.io/mesto/index.html)
