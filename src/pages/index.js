@@ -52,6 +52,8 @@ const popupEditProfile = new PopupWithForm({
     onEditSubmit()
   },
 })
+
+popupEditProfile._getInputValues()
 popupEditProfile.setEventListeners()
 
 const popupAddCard = new PopupWithForm({
@@ -100,7 +102,7 @@ const createCard = (item) => {
       data: item,
       handleCardClick: () => {
         openPopupImage.open({
-          data: item,
+          element: item,
         })
       },
     },
