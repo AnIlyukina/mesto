@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mesto</title>
-    <!-- <link rel="stylesheet" href="./pages/index.css"> -->
+    <link rel="stylesheet" href="./pages/index.css">
   </head>
   <body class="body">
     <div class="page">
@@ -19,13 +19,13 @@
       <main class="content">
         <section class="profile">
           <div class="profile__items">
-            <div class="profile__avatar"></div>
+            <div class="profile__avatar"> <button class='profile__edit-button profile__edit-button_type_avatar'></button></div>
             <div class="profile__info">
               <div class="profile__info-main">
-                <h1 class="profile__info-name">Жак-Ив Кусто</h1>
-                <button type="button" class="profile__edit-button"></button>
+                <h1 class="profile__info-name"></h1>
+                <button type="button" class="profile__edit-button profile__edit-button_type_info"></button>
               </div>
-              <div class="profile__info-vocation">Исследователь океана</div>
+              <div class="profile__info-vocation"></div>
             </div>
             <button type="button" class="profile__add-button"></button>
           </div>
@@ -113,6 +113,17 @@
           </form>
         </div>
       </div>
+
+      <div class="popup popup_type_confirm">
+        <div class="popup__container popup__form">
+          <button type="button" class="popup__close"></button>
+          <h2 class="popup__form-title">Вы уверены?</h2>
+            <button type="submit" class="popup__button popup__form-save popup_form-save_confirm_box-model">
+              Да
+            </button>
+        </div>
+      </div>
+
       <div class="popup popup_type_image">
         <div class="popup__container popup__container_type_image">
           <button type="button" class="popup__close"></button>
@@ -135,11 +146,14 @@
         <button type="button" class="elements__delete"></button>
         <div class="elements__group">
           <h3 class="elements__name"></h3>
-          <button type="button" class="elements__like"></button>
+          <div class="elements__activity">
+            <button type="button" class="elements__like"></button>
+            <span class="elements__like-count">6</span>
+          </div>
         </div>
       </li>
     </template>
-    <!-- <script type="module" src='./pages/index.js'></script>
-    <script type="module" src="./components/Api.js"></script> -->
+    <script type="module" src='./pages/index.js'></script>
+    <script type="module" src="./components/Api.js"></script>
   </body>
 </html>

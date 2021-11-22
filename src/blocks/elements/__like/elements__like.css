@@ -11,6 +11,8 @@
   align-self:flex-end;
   box-sizing: border-box;
   transition: .3s;
+  margin-bottom: 3px;
+  align-self: center;
 }
 
 .elements__like:hover{

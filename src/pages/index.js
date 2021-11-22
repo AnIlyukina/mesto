@@ -1,4 +1,4 @@
-import './index.css';
+import { Api } from "../components/Api.js"
 import { Card } from "../components/Card.js"
 import { FormValidator } from "../components/FormValidator.js"
 import { Section } from "../components/Section.js"
@@ -6,11 +6,12 @@ import { UserInfo } from "../components/UserInfo.js"
 import { PopupWithImage } from "../components/PopupWithImage.js"
 import { PopupWithForm } from "../components/PopupWithForm.js"
 import {
-  initialCards,
   validationConfig,
   popupFormEdit,
   popupFormAdd,
 } from "../utils/constants.js"
+
+
 
 // Переменные окна popapEdit
 const popupEdit = document.querySelector(".popup_type_edit")
@@ -24,19 +25,16 @@ const popupAdd = document.querySelector(".popup_type_add")
 const popupImage = document.querySelector(".popup_type_image")
 
 //Переменныe секции Profile
-const editButton = document.querySelector(".profile__edit-button")
+const editButton = document.querySelector(".profile__edit-button_type_info")
 const profileName = document.querySelector(".profile__info-name")
 const profileVocation = document.querySelector(".profile__info-vocation")
 const addButton = document.querySelector(".profile__add-button")
+const avatar = document.querySelector('.profile__avatar')
 
 // Переменные section element
 const elementGrid = document.querySelector(".elements__grid")
 
-//Объект с селекторами двух элементов: элемента имени пользователя и элемента информации о себе
-const userInfoObj = {
-  name: profileName,
-  vocation: profileVocation,
-}
+
 
 // экземпляр класса для проверки валидации popapEdit
 const formProfile = new FormValidator(validationConfig, popupFormEdit)
@@ -64,9 +62,48 @@ const popupAddCard = new PopupWithForm({
 })
 popupAddCard.setEventListeners()
 
+
+const api = new Api({
+  baseUrl: 'https://nomoreparties.co/v1/cohort-30/',
+  headers: {
+    authorization: 'e95f6452-4a83-47bc-9602-e1836af50369',
+    'Content-Type': 'application/json'
+  }
+}); 
+
+
+// вставляем данные полученные с сервера на сайт
+const infoData = api.getInfoDate().then(data => {
+
+  profileName.textContent = data.name, 
+  profileVocation.textContent = data.about 
+  avatar.style.backgroundImage = `url(${data.avatar})`
+
+})
+
+let cardsList
+let cards = []
+
+// Добавление карточек из массива полученного с сервера
+api.getInitialCards().then(data => {
+  cards = data
+  cardsList = new Section(
+    {
+      renderer: (item) => {
+        const element = createCard(item)
+        cardsList.addItemAppend(element)
+      },
+    },
+    elementGrid
+  )
+  cardsList.renderItems(data)
+})
+
+
 // Экземпляр, отвечающий за управление отображения информации о пользователе страницы
 const userInform = new UserInfo({
-  data: userInfoObj,
+  name: profileName,
+  vocation: profileVocation,
 })
 
 //Функция на открытие окна popupEdit
@@ -79,11 +116,20 @@ const openPopupProfile = () => {
 
 //Функция на сохранения данных popupEdit
 const onEditSubmit = () => {
-  userInform.setUserInfo({
-    userName: popupFormName.value,
-    userVocation: popupFormVocation.value,
-  }),
-    popupEditProfile.close()
+  api.saveInfoDate({
+    name: popupFormName.value,
+    about: popupFormVocation.value
+  })
+  .then(data => {
+    userInform.setUserInfo({
+      userName: data.name,
+      userVocation: data.about,
+    })
+  })
+  .catch(err => {
+    console.log(err)
+  })
+  popupEditProfile.close()
 }
 
 // Функция на открытие окна popupAdd
@@ -105,6 +151,12 @@ const createCard = (item) => {
           element: item,
         })
       },
+      handleDeleteIconClick: (cardId) => {
+        deleteCard(cardId)
+      },
+      handleLikeClick: async (cardId) => {
+        await likeCardOnServer(cardId)
+      },
     },
     ".elements__template"
   )
@@ -112,18 +164,50 @@ const createCard = (item) => {
   return cardElement
 }
 
-// Добавление карточек из готового массива
-const cardsList = new Section(
-  {
-    renderer: (item) => {
-      const element = createCard(item)
-      cardsList.addItemAppend(element)
-    },
-  },
-  elementGrid
-)
 
-cardsList.renderItems(initialCards)
+//Лайк карточки
+const likeCardOnServer = async (cardId) => {
+  console.log(cards)
+  let card = cards.find(c => c._id === cardId)
+  if (!card.likes.find(l => l._id === '87bfa82b813ceb37b97c25dd')) {
+    // api.likeCard(cardId)
+    //   .then(() => {
+    //     card._myLike = !card._myLike
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+    try {
+      await api.likeCard(cardId)
+      
+    }
+    catch(e) {
+      console.log(e)
+    }
+  }
+  else {
+    // api.deleteLikeCard(cardId)
+    //   .then(() => {
+    //     card._myLike = !card._myLike
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //   })
+    await api.deleteLikeCard(cardId)
+  }
+}
+
+
+//Удаление карточки
+const deleteCard = (cardId) => {
+  api.deleteCard(cardId)
+    .then(data => {
+      console.log(data)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+}
 
 // Добавление новой карточки в массив
 const addCard = (inputs) => {
@@ -131,8 +215,14 @@ const addCard = (inputs) => {
     name: inputs.title,
     link: inputs.link,
   }
-  const newElement = createCard(addCardElement)
-  cardsList.addItemPrepend(newElement)
+
+  api.saveCard(addCardElement).then(() => {
+    const newElement = createCard(addCardElement)
+    cardsList.addItemPrepend(newElement)
+  })
+  .catch(err => {
+    console.log(err)
+  })
 
   popupAddCard.close()
 }

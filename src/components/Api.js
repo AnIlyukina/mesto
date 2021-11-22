@@ -1,24 +1,119 @@
-// Получение информации о пользователе с сервера
+export class Api{
+  constructor(option){
+    this._baseUrl = option.baseUrl
+    this._headers = option.headers
+  }
 
-// fetch('https://nomoreparties.co/v1/cohort-30/users/me ',{
-//   headers:{
-//     authorization: 'e95f6452-4a83-47bc-9602-e1836af50369'
-//   }
-// })
-// .then(res => res.json())
-// .then((result)=>{
-//   console.log(result)
-// })
+  // Получение информации о пользователе 
+  getInfoDate(){
+    return fetch(`${this._baseUrl}users/me/`, {
+      method:'GET',
+      headers: this._headers
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`)
+    })
+  }
+  
 
+  getInitialCards() {
+    return fetch(`${this._baseUrl}cards/`, {
+      method:'GET',
+      headers: this._headers
+    })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`)
+    })
+  }
 
-// Получение карточек с сервера
+  saveInfoDate(data){
+    return fetch(`${this._baseUrl}users/me/`, {
+      method:'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: `${data.name}`,
+        about: `${data.about}`
+      })
+    })
+    .then(res =>{
+      if (res.ok){
+        return res.json()
+      }
+      return Promise.reject(`Ошибка ${res.status}`)
+    })
+  }
 
-// fetch('https://mesto.nomoreparties.co/v1/cohort-30/cards',{
-//   headers:{s
-//     authorization:'e95f6452-4a83-47bc-9602-e1836af50369'
-//   }
-// })
-// .then(res => res.json())
-// .then((result) => {
-//   console.log(result)
-// })
+  saveCard(data){
+    return fetch(`${this._baseUrl}cards/`, {
+      method:'POST',
+      headers: this._headers,
+      body: JSON.stringify({
+        name: `${data.name}`,
+        link: `${data.link}`
+      })
+    })
+    .then(res =>{
+      if (res.ok){
+        return res.json()
+      }
+      return Promise.reject(`Ошибка ${res.status}`)
+    })
+  }
+
+  deleteCard(cardId){
+    return fetch(`${this._baseUrl}cards/${cardId}`, {
+      method:'DELETE',
+      headers: this._headers,
+    })
+    .then(res =>{
+      if (res.ok){
+        return res.json()
+      }
+      return Promise.reject(`Ошибка ${res.status}`)
+    })
+  }
+
+  async likeCard(cardId){
+    // return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+    //   method:'PUT',
+    //   headers: this._headers,
+    // })
+    // .then(res =>{
+    //   if (res.ok){
+    //     return res.json()
+    //   }
+    //   return Promise.reject(`Ошибка ${res.status}`)
+    // })
+    const response = await fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+      method:'PUT',
+      headers: this._headers,
+    });
+    const data = await response.json()
+    return data
+  }
+
+  async deleteLikeCard(cardId){
+    // return fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+    //   method:'DELETE',
+    //   headers: this._headers,
+    // })
+    // .then(res =>{
+    //   if (res.ok){
+    //     return res.json()
+    //   }
+    //   return Promise.reject(`Ошибка ${res.status}`)
+    // })
+    const response = await fetch(`${this._baseUrl}cards/likes/${cardId}`, {
+      method:'DELETE',
+      headers: this._headers,
+    });
+    const data = await response.json()
+    return data
+  }
+}

@@ -1,7 +1,7 @@
 export class UserInfo {
-  constructor({ data }) {
-    this._name = data.name
-    this._vocation = data.vocation
+  constructor({ name, vocation }) {
+    this._name = name
+    this._vocation = vocation
   }
 
   getUserInfo() {
