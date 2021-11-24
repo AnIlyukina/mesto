@@ -25,7 +25,7 @@ const popupFormVocation = popupEdit.querySelector(
 const popupAdd = document.querySelector(".popup_type_add");
 
 //Переменные окна popapImage
-const popupImage = document.querySelector(".popup_type_image");
+const popupImageElement = document.querySelector(".popup_type_image");
 
 //Переменные окна popapConfirm
 const popupConfirm = document.querySelector(".popup_type_confirm");
@@ -50,7 +50,7 @@ const avatar = document.querySelector(".profile__avatar");
 const elementGrid = document.querySelector(".elements__grid");
 
 const popupWithSubmit = new PopupWithSubmit(popupConfirm);
-popupWithSubmit.setEventListeners();
+
 
 // экземпляр класса для проверки валидации popapEdit
 const formProfile = new FormValidator(validationConfig, popupFormEditSelector);
@@ -76,9 +76,11 @@ const api = new Api({
 let cardsList;
 let cards = [];
 let userId;
+
 // загрузка данных на странице
 Promise.all([api.getInfoDate(), api.getInitialCards()])
   .then((data) => {
+    console.log(data)
     userId = data[0]._id;
 
     //Добавление данных полученные с сервера
@@ -111,6 +113,7 @@ const userInform = new UserInfo({
 
 //Функция на открытие окна popupEdit
 const openPopupProfile = () => {
+  formProfile.clearValidation()
   const getUserInfo = userInform.getUserInfo();
   popupFormName.value = getUserInfo.userName;
   popupFormVocation.value = getUserInfo.userVocation;
@@ -164,6 +167,7 @@ const popupUpdateAvatar = new PopupWithForm({
 popupUpdateAvatar.setEventListeners();
 
 const openPopupAvatar = () => {
+  formAvatar.clearValidation()
   popupUpdateAvatar.open();
 };
 
@@ -187,6 +191,7 @@ const updateAvatar = () => {
 
 // Функция на открытие окна popupAdd
 const openPopupAddCard = () => {
+  formAdd.clearValidation()
   popupAddCard.open();
 };
 
@@ -221,7 +226,7 @@ const addCard = (inputs) => {
     });
 };
 
-let card;
+
 //Функция для создания новой карточки
 const createCard = (data) => {
   let card = new Card(
@@ -229,11 +234,13 @@ const createCard = (data) => {
       data,
       userId,
       handleCardClick: () => {
-        openPopupImage.open(data);
+        popupImage.open(data);
       },
       handleDeleteIconClick: (cardId) => {
         popupWithSubmit.open();
+        popupWithSubmit.setEventListeners();
         popupWithSubmit.setSubmitAction(() => {
+          popupWithSubmit.toggleLoadingSubmit(true)
           api
             .deleteCard(cardId)
             .then(() => {
@@ -242,6 +249,9 @@ const createCard = (data) => {
             })
             .catch((err) => {
               console.log(err);
+            })
+            .finally(() => {
+              popupWithSubmit.toggleLoadingSubmit(false);
             });
         });
       },
@@ -263,9 +273,9 @@ const createCard = (data) => {
           })
           .catch((err) => {
             console.log(err);
-          });
+          })
+        },
       },
-    },
     ".elements__template"
   );
   const cardElement = card.generateCard();
@@ -273,8 +283,8 @@ const createCard = (data) => {
 };
 
 //экземпляр PopupWithImage вставляет в попап картинку с src изображения и подписью к картинке
-const openPopupImage = new PopupWithImage(popupImage);
-openPopupImage.setEventListeners();
+const popupImage = new PopupWithImage(popupImageElement);
+popupImage.setEventListeners();
 
 editButtonInfo.addEventListener("click", openPopupProfile);
 

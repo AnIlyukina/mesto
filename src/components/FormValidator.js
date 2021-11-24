@@ -14,8 +14,19 @@ export class FormValidator {
     inputElement.classList.add(this._inputErrorClass)
   }
 
+  _checkInputValidity = (inputElement) => {
+    const isInputNotValid = !inputElement.validity.valid
+    const errorElement = this._form.querySelector(`#${inputElement.id}-error`)
+
+    if (isInputNotValid) {
+      this._showError(inputElement, errorElement)
+    } else {
+      this._hideError(inputElement, errorElement)
+    }
+  }
+
   _hideError = (inputElement, errorElement) => {
-    errorElement.textContent = ""
+    errorElement.textContent = " ",
     inputElement.classList.remove(this._inputErrorClass)
   }
 
@@ -29,15 +40,12 @@ export class FormValidator {
     }
   }
 
-  _checkInputValidity = (inputElement) => {
-    const isInputNotValid = !inputElement.validity.valid
-    const errorElement = this._form.querySelector(`#${inputElement.id}-error`)
-
-    if (isInputNotValid) {
-      this._showError(inputElement, errorElement)
-    } else {
+  clearValidation = () => {
+    this._inputsList.forEach((inputElement) => {
+      const errorElement = this._form.querySelector(`#${inputElement.id}-error`)
       this._hideError(inputElement, errorElement)
-    }
+    })
+    this._form.reset()
   }
 
   _setEventListeners = () => {

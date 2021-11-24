@@ -43,6 +43,5 @@ export class PopupWithForm extends Popup {
     } else{
       this._submitButton.textContent = this._submitButtonDefault
     }
-
   }
 }
