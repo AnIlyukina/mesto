@@ -44,13 +44,13 @@ const editButtonInfo = document.querySelector(
 const profileName = document.querySelector(".profile__info-name");
 const profileVocation = document.querySelector(".profile__info-vocation");
 const addButton = document.querySelector(".profile__add-button");
-const avatar = document.querySelector(".profile__avatar");
+const avatarElemenet = document.querySelector(".profile__avatar");
 
 // Переменные section element
 const elementGrid = document.querySelector(".elements__grid");
 
 const popupWithSubmit = new PopupWithSubmit(popupConfirm);
-
+popupWithSubmit.setEventListeners();
 
 // экземпляр класса для проверки валидации popapEdit
 const formProfile = new FormValidator(validationConfig, popupFormEditSelector);
@@ -84,9 +84,13 @@ Promise.all([api.getInfoDate(), api.getInitialCards()])
     userId = data[0]._id;
 
     //Добавление данных полученные с сервера
-    (profileName.textContent = data[0].name),
-      (profileVocation.textContent = data[0].about);
-    avatar.style.backgroundImage = `url(${data[0].avatar})`;
+    userInform.setUserInfo({
+      userName: data[0].name,
+      userVocation: data[0].about
+    })
+
+    userInform.setAvatar(data[0].avatar) 
+    // avatar.style.backgroundImage = `url(${data[0].avatar})`;
 
     //Добавление карточек полученных с сервера
     cards = data[1];
@@ -109,6 +113,7 @@ Promise.all([api.getInfoDate(), api.getInitialCards()])
 const userInform = new UserInfo({
   name: profileName,
   vocation: profileVocation,
+  avatar: avatarElemenet,
 });
 
 //Функция на открытие окна popupEdit
@@ -128,7 +133,6 @@ const popupEditProfile = new PopupWithForm({
   },
 });
 
-popupEditProfile._getInputValues();
 popupEditProfile.setEventListeners();
 
 //Функция на сохранения данных popupEdit
@@ -176,7 +180,7 @@ const updateAvatar = () => {
   api
     .changeAvatar(popupFormAvatar.value)
     .then((data) => {
-      avatar.style.backgroundImage = `url(${data.avatar})`;
+      userInform.setAvatar(data.avatar)
     })
     .then(() => {
       popupUpdateAvatar.close();
@@ -229,7 +233,7 @@ const addCard = (inputs) => {
 
 //Функция для создания новой карточки
 const createCard = (data) => {
-  let card = new Card(
+  const card = new Card(
     {
       data,
       userId,
@@ -238,7 +242,6 @@ const createCard = (data) => {
       },
       handleDeleteIconClick: (cardId) => {
         popupWithSubmit.open();
-        popupWithSubmit.setEventListeners();
         popupWithSubmit.setSubmitAction(() => {
           popupWithSubmit.toggleLoadingSubmit(true)
           api

@@ -1,5 +1,3 @@
-import { Api } from "./Api.js";
-
 // Класс, который создаёт карточку
 export class Card {
   constructor(
@@ -85,6 +83,8 @@ export class Card {
   // метод класса на удаление карточки
   cardDelete = () => {
     this._element.remove();
+    this._element = null; 
+
   };
 
   // Обработчики событий на лайк, удаление, открытие попапа с картинкой

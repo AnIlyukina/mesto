@@ -1,7 +1,8 @@
 export class UserInfo {
-  constructor({ name, vocation }) {
+  constructor({ name, vocation, avatar }) {
     this._name = name
     this._vocation = vocation
+    this._avatar = avatar
   }
 
   getUserInfo() {
@@ -12,7 +13,13 @@ export class UserInfo {
   }
 
   setUserInfo({ userName, userVocation }) {
-    this._name.textContent = userName
+    if (userName) {  
+      this._name.textContent = userName
+    }
     this._vocation.textContent = userVocation
+  }
+
+  setAvatar(ava){
+    this._avatar.style.backgroundImage = `url(${ava})`
   }
 }
