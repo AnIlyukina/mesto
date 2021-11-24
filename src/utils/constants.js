@@ -1,8 +1,11 @@
 //селектор формы Edit
-export const popupFormEdit = ".popup__form_type_edit"
+export const popupFormEditSelector = ".popup__form_type_edit"
 
 //селектор формы Add
-export const popupFormAdd = ".popup__form_type_add"
+export const popupFormAddSelector = ".popup__form_type_add"
+
+// селектор формы Avatar
+export const popupFormAvatarSelector = '.popup__form_type_avatar'
 
 // Массив с изначальными карточками
 export const initialCards = [
