@@ -15,11 +15,14 @@ export class UserInfo {
   setUserInfo({ userName, userVocation }) {
     if (userName) {  
       this._name.textContent = userName
+    } if (userVocation){
+      this._vocation.textContent = userVocation
     }
-    this._vocation.textContent = userVocation
   }
 
   setAvatar(ava){
-    this._avatar.style.backgroundImage = `url(${ava})`
+    if(ava){
+      this._avatar.style.backgroundImage = `url(${ava})`
+    }
   }
 }
